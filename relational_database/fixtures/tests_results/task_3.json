@@ -1,0 +1,101 @@
+[
+  {
+    "customerid": 1,
+    "customername": "Alfreds Futterkiste",
+    "contactname": "Maria Anders",
+    "address": "Obere Str. 57",
+    "city": "Berlin",
+    "postalcode": "12209",
+    "country": "Germany"
+  },
+  {
+    "customerid": 6,
+    "customername": "Blauer See Delikatessen",
+    "contactname": "Hanna Moos",
+    "address": "Forsterstr. 57",
+    "city": "Mannheim",
+    "postalcode": "68306",
+    "country": "Germany"
+  },
+  {
+    "customerid": 17,
+    "customername": "Drachenblut Delikatessend",
+    "contactname": "Sven Ottlieb",
+    "address": "Walserweg 21",
+    "city": "Aachen",
+    "postalcode": "52066",
+    "country": "Germany"
+  },
+  {
+    "customerid": 25,
+    "customername": "Frankenversand",
+    "contactname": "Peter Franken",
+    "address": "Berliner Platz 43",
+    "city": "München",
+    "postalcode": "80805",
+    "country": "Germany"
+  },
+  {
+    "customerid": 39,
+    "customername": "Königlich Essen",
+    "contactname": "Philip Cramer",
+    "address": "Maubelstr. 90",
+    "city": "Brandenburg",
+    "postalcode": "14776",
+    "country": "Germany"
+  },
+  {
+    "customerid": 44,
+    "customername": "Lehmanns Marktstand",
+    "contactname": "Renate Messner",
+    "address": "Magazinweg 7",
+    "city": "Frankfurt a.M. ",
+    "postalcode": "60528",
+    "country": "Germany"
+  },
+  {
+    "customerid": 52,
+    "customername": "Morgenstern Gesundkost",
+    "contactname": "Alexander Feuer",
+    "address": "Heerstr. 22",
+    "city": "Leipzig",
+    "postalcode": "04179",
+    "country": "Germany"
+  },
+  {
+    "customerid": 56,
+    "customername": "Ottilies Käseladen",
+    "contactname": "Henriette Pfalzheim",
+    "address": "Mehrheimerstr. 369",
+    "city": "Köln",
+    "postalcode": "50739",
+    "country": "Germany"
+  },
+  {
+    "customerid": 63,
+    "customername": "QUICK-Stop",
+    "contactname": "Horst Kloss",
+    "address": "Taucherstraße 10",
+    "city": "Cunewalde",
+    "postalcode": "01307",
+    "country": "Germany"
+  },
+  {
+    "customerid": 79,
+    "customername": "Toms Spezialitäten",
+    "contactname": "Karin Josephs",
+    "address": "Luisenstr. 48",
+    "city": "Münster",
+    "postalcode": "44087",
+    "country": "Germany"
+  },
+  {
+    "customerid": 86,
+    "customername": "Die Wandernde Kuh",
+    "contactname": "Rita Müller",
+    "address": "Adenauerallee 900",
+    "city": "Stuttgart",
+    "postalcode": "70563",
+    "country": "Germany"
+  }
+]

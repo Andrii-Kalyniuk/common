@@ -1,0 +1,92 @@
+[
+  {
+    "customerid": 1,
+    "customername": "Alfreds Futterkiste",
+    "contactname": "Maria Anders",
+    "address": "Obere Str. 57",
+    "city": "Berlin",
+    "postalcode": "12209",
+    "country": "Germany"
+  },
+  {
+    "customerid": 2,
+    "customername": "Ana Trujillo Emparedados y helados",
+    "contactname": "Ana Trujillo",
+    "address": "Avda. de la Constitución 2222",
+    "city": "México D.F.",
+    "postalcode": "05021",
+    "country": "Mexico"
+  },
+  {
+    "customerid": 3,
+    "customername": "Antonio Moreno Taquería",
+    "contactname": "Antonio Moreno",
+    "address": "Mataderos 2312",
+    "city": "México D.F.",
+    "postalcode": "05023",
+    "country": "Mexico"
+  },
+  {
+    "customerid": 4,
+    "customername": "Around the Horn",
+    "contactname": "Thomas Hardy",
+    "address": "120 Hanover Sq.",
+    "city": "London",
+    "postalcode": "WA1 1DP",
+    "country": "UK"
+  },
+  {
+    "customerid": 5,
+    "customername": "Berglunds snabbköp",
+    "contactname": "Christina Berglund",
+    "address": "Berguvsvägen 8",
+    "city": "Luleå",
+    "postalcode": "S-958 22",
+    "country": "Sweden"
+  },
+  {
+    "customerid": 6,
+    "customername": "Blauer See Delikatessen",
+    "contactname": "Hanna Moos",
+    "address": "Forsterstr. 57",
+    "city": "Mannheim",
+    "postalcode": "68306",
+    "country": "Germany"
+  },
+  {
+    "customerid": 7,
+    "customername": "Blondel père et fils",
+    "contactname": "Frédérique Citeaux",
+    "address": "24, place Kléber",
+    "city": "Strasbourg",
+    "postalcode": "67000",
+    "country": "France"
+  },
+  {
+    "customerid": 8,
+    "customername": "Bólido Comidas preparadas",
+    "contactname": "Martín Sommer",
+    "address": "C/ Araquil, 67",
+    "city": "Madrid",
+    "postalcode": "28023",
+    "country": "Spain"
+  },
+  {
+    "customerid": 9,
+    "customername": "Bon app'",
+    "contactname": "Laurence Lebihans",
+    "address": "12, rue des Bouchers",
+    "city": "Marseille",
+    "postalcode": "13008",
+    "country": "France"
+  },
+  {
+    "customerid": 10,
+    "customername": "Bottom-Dollar Marketse",
+    "contactname": "Elizabeth Lincoln",
+    "address": "23 Tsawassen Blvd.",
+    "city": "Tsawassen",
+    "postalcode": "T2F 8M4",
+    "country": "Canada"
+  }
+]

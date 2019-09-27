@@ -1,0 +1,58 @@
+[
+  {
+    "supplierid": 1,
+    "suppliername": "Exotic Liquid",
+    "contactname": "Charlotte Cooper",
+    "city": "Londona",
+    "country": "UK"
+  },
+  {
+    "supplierid": 2,
+    "suppliername": "New Orleans Cajun Delights",
+    "contactname": "Shelley Burke",
+    "city": "New Orleans",
+    "country": "USA"
+  },
+  {
+    "supplierid": 3,
+    "suppliername": "Grandma Kelly's Homestead",
+    "contactname": "Regina Murphy",
+    "city": "Ann Arbor",
+    "country": "USA"
+  },
+  {
+    "supplierid": 4,
+    "suppliername": "Tokyo Traders",
+    "contactname": "Yoshi Nagase",
+    "city": "Tokyo",
+    "country": "Japan"
+  },
+  {
+    "supplierid": 6,
+    "suppliername": "Mayumi's",
+    "contactname": "Mayumi Ohno",
+    "city": "Osaka",
+    "country": "Japan"
+  },
+  {
+    "supplierid": 8,
+    "suppliername": "Specialty Biscuits, Ltd.",
+    "contactname": "Peter Wilson",
+    "city": "Manchester",
+    "country": "UK"
+  },
+  {
+    "supplierid": 16,
+    "suppliername": "Bigfoot Breweries",
+    "contactname": "Cheryl Saylor",
+    "city": "Bend",
+    "country": "USA"
+  },
+  {
+    "supplierid": 19,
+    "suppliername": "New England Seafood Cannery",
+    "contactname": "Robb Merchant",
+    "city": "Boston",
+    "country": "USA"
+  }
+]
