@@ -6,9 +6,9 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-from relational_database.config import TEST_DATABASE, DATABASE, FIXTURES_PATH
-from relational_database.db_utils import init_tables, clear_tables, fill_tables, drop_tables
-from relational_database.homework import \
+from config import TEST_DATABASE, DATABASE, FIXTURES_PATH
+from db_utils import init_tables, clear_tables, fill_tables, drop_tables
+from homework import \
     (task_1_add_new_record_to_db,
      task_2_list_all_customers,
      task_3_list_customers_in_germany,
@@ -164,8 +164,21 @@ class TestSQLQueries(unittest.TestCase):
             actual_result = [dict(record) for record in actual_result]
             expected_result = self.load_rows_from_file("task_8.json")
 
-        for i, row in enumerate(actual_result):
-            self.assertDictEqual(row, expected_result[i])
+        def convert_list_into_dic(cities_list):
+            ''''
+            Convert list of dict with [{'count': value, 'city': 'city_name'}, ...]
+            into one dict {'city_name': count_value, ...} for the proper comparison in assertDictEqual()
+            '''
+            cities_dict = {}
+            for count_city_pair in cities_list:
+                cities_dict[count_city_pair['city']] = count_city_pair['count']
+            return cities_dict
+
+        actual_result = convert_list_into_dic(actual_result)
+        expected_result = convert_list_into_dic(expected_result)
+        self.assertDictEqual(actual_result, expected_result)
+        # for i, row in enumerate(actual_result):
+            # self.assertDictEqual(row, expected_result[i])
 
     def test_task_9(self):
         with self.conn.cursor(cursor_factory=RealDictCursor) as cursor:
