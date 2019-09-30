@@ -28,7 +28,11 @@ def task_2_remove_dict_fields(data: DT, redundant_keys: List[str]) -> DT:
        remove_dict_field([{'name': 'Alex', 'age': 26}, {'name': 'denys', 'age': 89}], 'age')
         >>> [{'name': 'Alex'}, {'name': 'denys'}]
     """
-    pass
+    for redundant_key in redundant_keys:
+        for i in range(len(data)):
+            if data[i].get(redundant_key):
+                del data[i][redundant_key]
+    return data
 
 
 def task_3_find_item_via_value(data: DT, value) -> DT:
@@ -38,21 +42,27 @@ def task_3_find_item_via_value(data: DT, value) -> DT:
         find_item_via_value([{'name': 'Alex', 'age': 26}, {'name': 'denys', 'age': 89}], 26)
         >>> [{'name': 'Alex', 'age': 26}]
     """
-    pass
+    items_finded = []
+    for i in range(len(data)):
+        for any_key in data[i]:
+            if value == data[i][any_key]:
+                items_finded.append(data[i])
+    return items_finded
 
 
 def task_4_min_value_integers(data: List[int]) -> int:
     """
     Find and return minimum value from list
     """
-    pass
+    if data:
+        return min(data)
 
 
 def task_5_min_value_strings(data: List[Union[str, int]]) -> str:
     """
-    Find the longest string
+    Find the shortest string
     """
-    pass
+    return sorted(data, key=lambda i: len(str(i)))[0]
 
 
 def task_6_min_value_list_of_dicts(data: DT, key: str) -> ST:
@@ -61,7 +71,8 @@ def task_6_min_value_list_of_dicts(data: DT, key: str) -> ST:
     Returns:
 
     """
-    pass
+    max_value = 10**4
+    return sorted(data, key=lambda dic: dic.get(key, max_value))[0]
 
 
 def task_7_max_value_list_of_lists(data: List[List[int]]) -> int:
