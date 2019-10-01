@@ -1,5 +1,3 @@
-from typing import List
-
 
 def task_1_add_new_record_to_db(con) -> None:
     """
@@ -17,7 +15,6 @@ def task_1_add_new_record_to_db(con) -> None:
         con: psycopg connection
 
     Returns: 92 records
-
     """
     new_customer = {
         "customerid": 92,
@@ -29,18 +26,19 @@ def task_1_add_new_record_to_db(con) -> None:
         "country": "Singapore"
     }
     with con.cursor() as my_cursor:
-        my_cursor.execute('''
-        INSERT
-        INTO customers
-        VALUES(
-            {customerid},
-            '{customername}',
-            '{contactname}',
-            '{address}',
-            '{city}',
-            '{postalcode}',
-            '{country}'
-        );'''.format(**new_customer))
+        my_cursor.execute(
+            """INSERT 
+            INTO customers
+            VALUES(
+                {customerid},
+                '{customername}',
+                '{contactname}',
+                '{address}',
+                '{city}',
+                '{postalcode}',
+                '{country}'
+            )""".format(**new_customer)
+        )
         con.commit()
 
 def task_2_list_all_customers(cur) -> list:
@@ -53,10 +51,7 @@ def task_2_list_all_customers(cur) -> list:
     Returns: 91 records
 
     """
-    cur.execute('''
-    SELECT *
-    FROM customers;
-    ''')
+    cur.execute("""SELECT * FROM customers""")
     return cur.fetchall()
 
 
@@ -69,11 +64,8 @@ def task_3_list_customers_in_germany(cur) -> list:
 
     Returns: 11 records
     """
-    cur.execute('''
-    SELECT *
-    FROM customers
-    WHERE country = 'Germany';
-    ''')
+    cur.execute("""SELECT * FROM customers
+                   WHERE country = 'Germany'""")
     return cur.fetchall()
 
 
@@ -87,11 +79,9 @@ def task_4_update_customer(con):
 
     """
     with con.cursor() as my_cursor:
-        my_cursor.execute('''
-        UPDATE customers
-        SET customername = 'Johnny Depp'
-        WHERE customerid = 1;
-        ''')
+        my_cursor.execute("""UPDATE customers
+                             SET customername = 'Johnny Depp'
+                             WHERE customerid = 1""")
         con.commit()
 
 
@@ -103,11 +93,8 @@ def task_5_delete_the_last_customer(con) -> None:
         con: psycopg connection
     """
     with con.cursor() as my_cursor:
-        my_cursor.execute('''
-        DELETE
-        FROM customers
-        WHERE customerid = (SELECT MAX(customerid) FROM customers);
-        ''')
+        my_cursor.execute("""DELETE FROM customers
+                             WHERE customerid = (SELECT MAX(customerid) FROM customers)""")
         con.commit()
 
 
@@ -121,10 +108,7 @@ def task_6_list_all_supplier_countries(cur) -> list:
     Returns: 29 records
 
     """
-    cur.execute('''
-    SELECT country
-    FROM suppliers;
-    ''')
+    cur.execute("""SELECT country FROM suppliers""")
     return cur.fetchall()
 
 
@@ -138,11 +122,8 @@ def task_7_list_supplier_countries_in_desc_order(cur) -> list:
     Returns: 29 records in descending order
 
     """
-    cur.execute('''
-    SELECT country
-    FROM suppliers
-    ORDER BY country DESC;
-    ''')
+    cur.execute("""SELECT country FROM suppliers
+                   ORDER BY country DESC""")
     return cur.fetchall()
 
 
@@ -156,12 +137,10 @@ def task_8_count_customers_by_city(cur):
     Returns: 69 records in descending order
 
     """
-    cur.execute('''
-    SELECT COUNT(customername), city
-    FROM customers
-    GROUP BY city
-    ORDER BY COUNT(customername) DESC, city;
-    ''')
+    cur.execute("""SELECT COUNT(customername), city
+                   FROM customers
+                   GROUP BY city
+                   ORDER BY COUNT(customername) DESC, city""")
     return cur.fetchall()
 
 
@@ -174,12 +153,10 @@ def task_9_count_customers_by_country_with_than_10_customers(cur):
 
     Returns: 3 records
     """
-    cur.execute('''
-    SELECT COUNT(customerid), country
-    FROM customers
-    GROUP BY country
-    HAVING COUNT(customerid) > 10;
-    ''')
+    cur.execute("""SELECT COUNT(customerid), country
+                   FROM customers
+                   GROUP BY country
+                   HAVING COUNT(customerid) > 10""")
     return cur.fetchall()
 
 
@@ -189,11 +166,7 @@ def task_10_list_first_10_customers(cur):
 
     Results: 10 records
     """
-    cur.execute('''
-    SELECT *
-    FROM customers
-    LIMIT 10;
-    ''')
+    cur.execute("""SELECT * FROM customers LIMIT 10""")
     return cur.fetchall()
 
 
@@ -206,11 +179,8 @@ def task_11_list_customers_starting_from_11th(cur):
 
     Returns: 11 records
     """
-    cur.execute('''
-    SELECT *
-    FROM customers
-    WHERE customerid > 11;
-    ''')
+    cur.execute("""SELECT * FROM customers
+                   WHERE customerid > 11""")
     return cur.fetchall()
 
 
@@ -223,11 +193,9 @@ def task_12_list_suppliers_from_specified_countries(cur):
 
     Returns: 8 records
     """
-    cur.execute('''
-    SELECT supplierid, suppliername, contactname, city, country
-    FROM suppliers
-    WHERE country IN ('UK', 'USA', 'Japan');
-    ''')
+    cur.execute("""SELECT supplierid, suppliername, contactname, city, country
+                   FROM suppliers
+                   WHERE country IN ('UK', 'USA', 'Japan')""")
     return cur.fetchall()
 
 
@@ -240,13 +208,10 @@ def task_13_list_products_from_sweden_suppliers(cur):
 
     Returns: 3 records
     """
-    cur.execute('''
-    SELECT productname
-    FROM products p
-    INNER JOIN suppliers s
-    ON p.supplierid = s.supplierid
-    WHERE s.country = 'Sweden';
-        ''')
+    cur.execute("""SELECT productname FROM products p
+                   INNER JOIN suppliers s
+                   ON p.supplierid = s.supplierid
+                   WHERE s.country = 'Sweden'""")
     return cur.fetchall()
 
 
@@ -261,19 +226,10 @@ def task_14_list_products_with_supplier_information(cur):
     """
 
     # in ploducts.sql 'lc_monetary' was SET to 'en_US.utf8' to display price in $
-    cur.execute('''
-    SELECT
-        p.productid,
-        p.productname,
-        p.unit,
-        p.price,
-        s.country,
-        s.city,
-        s.suppliername
-    FROM products p
-    INNER JOIN suppliers s
-    ON p.supplierid = s.supplierid;
-    ''')
+    cur.execute("""SELECT p.productid, p.productname, p.unit, p.price, s.country, s.city, s.suppliername
+                   FROM products p
+                   INNER JOIN suppliers s
+                   ON p.supplierid = s.supplierid""")
     return cur.fetchall()
 
 
@@ -286,16 +242,10 @@ def task_15_list_customers_with_any_order_or_not(cur):
 
     Returns: 213 records
     """
-    cur.execute('''
-    SELECT
-        c.customername,
-        c.contactname,
-        c.country,
-        o.orderid
-    FROM customers c
-    FULL OUTER JOIN orders o
-    ON c.customerid = o.customerid;
-    ''')
+    cur.execute("""SELECT c.customername, c.contactname, c.country, o.orderid
+                   FROM customers c
+                   FULL OUTER JOIN orders o
+                   ON c.customerid = o.customerid""")
     return cur.fetchall()
 
 
@@ -308,16 +258,10 @@ def task_16_match_all_customers_and_suppliers_by_country(cur):
 
     Returns: 194 records
     """
-    cur.execute('''
-    SELECT
-        c.customername ,
-        c.address,
-        c.country AS customercountry,
-        s.country AS suppliercountry,
-        s.suppliername
-    FROM customers c
-    FULL OUTER JOIN suppliers s
-    ON c.country = s.country
-    ORDER BY c.country, s.country;
-    ''')
+    cur.execute("""SELECT c.customername, c.address, c.country AS customercountry, s.country AS suppliercountry,
+                          s.suppliername
+                   FROM customers c
+                   FULL OUTER JOIN suppliers s
+                   ON c.country = s.country
+                   ORDER BY c.country, s.country""")
     return cur.fetchall()
