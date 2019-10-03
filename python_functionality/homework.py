@@ -14,9 +14,9 @@ def task_1_fix_names_start_letter(data: DT) -> DT:
         fix_names_start_letters([{'name': 'Alex', 'age': 26}, {'name': 'denys', 'age': 89}])
         >>> [{'name': 'Alex', 'age': 26}, {'name': 'Denys', 'age': 89}]
     """
-    for i in range(len(data)):
-        if data[i].get('name'):
-            data[i]['name'] = data[i].get('name').capitalize()
+    for dic in data:
+        if dic.get('name'):
+            dic['name'] = dic.get('name').capitalize()
     return data
 
 
@@ -29,9 +29,9 @@ def task_2_remove_dict_fields(data: DT, redundant_keys: List[str]) -> DT:
         >>> [{'name': 'Alex'}, {'name': 'denys'}]
     """
     for redundant_key in redundant_keys:
-        for i in range(len(data)):
-            if data[i].get(redundant_key):
-                del data[i][redundant_key]
+        for dic in data:
+            if dic.get(redundant_key):
+                del dic[redundant_key]
     return data
 
 
@@ -43,10 +43,10 @@ def task_3_find_item_via_value(data: DT, value) -> DT:
         >>> [{'name': 'Alex', 'age': 26}]
     """
     items_finded = []
-    for i in range(len(data)):
-        for any_key in data[i]:
-            if value == data[i][any_key]:
-                items_finded.append(data[i])
+    for dic in data:
+        for key in dic:
+            if value == dic[key]:
+                items_finded.append(dic)
     return items_finded
 
 
@@ -54,15 +54,14 @@ def task_4_min_value_integers(data: List[int]) -> int:
     """
     Find and return minimum value from list
     """
-    if data:
-        return min(data)
+    return min(data, default=None)
 
 
 def task_5_min_value_strings(data: List[Union[str, int]]) -> str:
     """
     Find the shortest string
     """
-    return sorted(data, key=lambda i: len(str(i)))[0]
+    return min(map(str, data), key=len, default=None)
 
 
 def task_6_min_value_list_of_dicts(data: DT, key: str) -> ST:
@@ -71,22 +70,23 @@ def task_6_min_value_list_of_dicts(data: DT, key: str) -> ST:
     Returns:
 
     """
-    max_value = 10**4
-    return sorted(data, key=lambda dic: dic.get(key, max_value))[0]
+    purified_from_not_valid_dicts = filter(lambda dic: key in dic, data)
+    return min(purified_from_not_valid_dicts, key=lambda dic: dic[key])
 
 
 def task_7_max_value_list_of_lists(data: List[List[int]]) -> int:
     """
     Find max value from list of lists
     """
-    pass
+    purified_from_empty_dicts = filter(list, data)
+    return max(map(max, purified_from_empty_dicts), default=None)
 
 
 def task_8_sum_of_ints(data: List[int]) -> int:
     """
     Find sum of all items in given list
     """
-    pass
+    return sum(data)
 
 
 def task_9_sum_characters_positions(text: str) -> int:
@@ -102,7 +102,7 @@ def task_9_sum_characters_positions(text: str) -> int:
         >>> 532
 
     """
-    pass
+    return sum(map(ord, text))
 
 
 def task_10_generator_of_simple_numbers() -> Generator[int, None, None]:
@@ -116,4 +116,18 @@ def task_10_generator_of_simple_numbers() -> Generator[int, None, None]:
         next(a)
         >>> 3
     """
-    pass
+    def is_num_simple(n):
+        """
+        Return: True if n is a simple number or False if it is not
+        """
+        for i in range(n, 1, -1):
+            if n % i == 0 and i < n and n != 1:
+                return False
+        return True
+
+    # generator part
+    n = 2
+    while n < 200:
+        if is_num_simple(n):
+            yield n
+        n = n + 1
