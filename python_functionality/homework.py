@@ -16,7 +16,7 @@ def task_1_fix_names_start_letter(data: DT) -> DT:
     """
     for dic in data:
         if dic.get('name'):
-            dic['name'] = dic.get('name').capitalize()
+            dic['name'] = dic['name'].capitalize()
     return data
 
 
@@ -28,12 +28,7 @@ def task_2_remove_dict_fields(data: DT, redundant_keys: List[str]) -> DT:
        remove_dict_field([{'name': 'Alex', 'age': 26}, {'name': 'denys', 'age': 89}], 'age')
         >>> [{'name': 'Alex'}, {'name': 'denys'}]
     """
-    for redundant_key in redundant_keys:
-        for dic in data:
-            if dic.get(redundant_key):
-                del dic[redundant_key]
-    return data
-
+    return [{key: value for key, value in dic.items() if key not in redundant_keys} for dic in data]
 
 def task_3_find_item_via_value(data: DT, value) -> DT:
     """
@@ -42,13 +37,7 @@ def task_3_find_item_via_value(data: DT, value) -> DT:
         find_item_via_value([{'name': 'Alex', 'age': 26}, {'name': 'denys', 'age': 89}], 26)
         >>> [{'name': 'Alex', 'age': 26}]
     """
-    items_finded = []
-    for dic in data:
-        for key in dic:
-            if value == dic[key]:
-                items_finded.append(dic)
-    return items_finded
-
+    return [dic for dic in data if value in dic.values()]
 
 def task_4_min_value_integers(data: List[int]) -> int:
     """
