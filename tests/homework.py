@@ -5,6 +5,8 @@ class Rectangle:
     def __init__(self, width, height):
         self.width = width
         self.height = height
+        if self.width <= 0 or self.height <= 0:
+            raise ValueError("Can't create rectangle with such width and height")
 
     def get_rectangle_perimeter(self):
         """
@@ -61,14 +63,13 @@ class Rectangle:
     def get_radius_of_inscribed_circle(self):
         """
         Get radius of inscribed circle in rectangle
-        due to the formula:      d
-                              -------
-                                2√2
+        due to the formula:      d                               side
+                              -------     or simpler way    r = -------
+                                2√2                               2
         where d is diagonal of the rectangle
         :return:
         """
         if self.width != self.height:
-            assert ValueError("Can't inscribed circle in rectangle with such width and height")
-        diagonal = self.get_rectangle_diagonal()
-        radius = diagonal / 2 * math.sqrt(2)
+            raise ValueError("Can't inscribed circle in rectangle with such width and height")  # bug was here
+        radius = self.width / 2.0  # bug was here
         return radius
