@@ -39,17 +39,16 @@ class Task20Tests(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_is_int_power_of_3(self):
-        actual = is_int_power_of_3(9)
-        self.assertTrue(actual)
+        self.assertTrue(is_int_power_of_3(3))
+        self.assertTrue(is_int_power_of_3(9))
+        self.assertFalse(is_int_power_of_3(30))
+        self.assertFalse(is_int_power_of_3(2))
+        self.assertTrue(is_int_power_of_3(-3))
 
     def test_add_until_result_single(self):
         expected = 5
         actual = add_until_result_single(59)
         self.assertEqual(actual, expected)
-
-    def test_is_int_power_of_3_int_less_3(self):
-        actual = is_int_power_of_3(2)
-        self.assertFalse(actual)
 
     def test_push_all_zeros_to_the_end(self):
         input_list = [0, 2, 3, 4, 6, 7, 10]

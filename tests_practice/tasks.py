@@ -5,10 +5,10 @@ def common_in_2_lists(list_a, list_b):
     """
     Task 1:
     Take two lists, say for example these two:
-      a =[1,1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
-      b =[1,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-     and write a program that returns a list that contains only
-     the elements that are common between the lists (without duplicates)
+    a = [1,1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+    b = [1,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    and write a program that returns a list that contains only
+    the elements that are common between the lists (without duplicates)
     """
     return sorted(list(set(list_a + list_b)))
 
@@ -32,6 +32,7 @@ def is_int_power_of_3(num):
     Input : 9
     Output : True
     """
+    num = abs(num)
     while num >= 3:
         if num % 3 == 0:
             if num == 3:
@@ -65,8 +66,7 @@ def push_all_zeros_to_the_end(some_list):
     Input : [0, 2, 3, 4, 6, 7, 10]
     Output : [2, 3, 4, 6, 7, 10, 0]
     """
-    return (list(filter(lambda x: x != 0, some_list))
-            + list(filter(lambda x: x == 0, some_list)))
+    return list(filter(lambda x: x != 0, some_list)) + list(filter(lambda x: x == 0, some_list))
 
 
 def is_sequence_arith_progress(some_seq, diff=None):
@@ -148,7 +148,7 @@ def convert_minutes_to_hours(minutes):
     converts to (ie. if num = 63 then the output should be 1:3).
     Separate   the number of hours and minutes with a colon.
     """
-    return '{}:{}'.format(minutes // 60, minutes % 60)
+    return f'{minutes // 60}:{minutes % 60}'
 
 
 def remove_punctuation(some_str):
@@ -159,7 +159,6 @@ def remove_punctuation(some_str):
     :param some_str: str
     :return: list of signs input string with ASCII letter or space
     """
-
     def replace_punct_sign_by_space(sign):
         if sign.lower() not in string.ascii_lowercase:
             return ' '
@@ -203,16 +202,15 @@ def get_words_in_back_order(some_str):
 def gen_fibonacci_n_numbers(num_of_elements):
     """
     Task 14:
-    Write a program that asks the user how many Fibonnaci numbers
+    Write a program that asks the user how many Fibonacci numbers
     to generate and then generates them. Take this opportunity to
     think about how you can use functions. Make sure to ask the user
     to enter the number of numbers in the sequence to generate.
-    (Hint: The Fibonnaci seqence is a sequence of numbers where
+    (Hint: The Fibonacci sequence is a sequence of numbers where
     the next number in the sequence is the sum of the previous
     two numbers in the sequence.
     The sequence looks like this: 1, 1, 2, 3, 5, 8, 13, …)
     """
-
     def fibonacci_generator():
         next_n, current_n = 0, 1
         while True:
@@ -220,7 +218,7 @@ def gen_fibonacci_n_numbers(num_of_elements):
             next_n, current_n = current_n + next_n, next_n
 
     fibonacci_seq = fibonacci_generator()
-    return [next(fibonacci_seq) for i in range(num_of_elements)]
+    return [next(fibonacci_seq) for _ in range(num_of_elements)]
 
 
 def get_only_even(num_list):
