@@ -1,4 +1,6 @@
 import unittest
+import pytest
+from mock import patch
 from tasks import (
     common_in_2_lists,
     how_many_a_in_str,
@@ -38,12 +40,15 @@ class Task20Tests(unittest.TestCase):
         actual = how_many_a_in_str('I am a good developer. I am also a writer')
         self.assertEqual(expected, actual)
 
-    def test_is_int_power_of_3(self):
-        self.assertTrue(is_int_power_of_3(3))
-        self.assertTrue(is_int_power_of_3(9))
-        self.assertFalse(is_int_power_of_3(30))
-        self.assertFalse(is_int_power_of_3(2))
-        self.assertTrue(is_int_power_of_3(-3))
+    def test_is_int_power_of_3_true(self):
+        for i in (3, 9, 27, -3, 2187):
+            with self.subTest(i=i):
+                self.assertTrue(is_int_power_of_3(i))
+
+    def test_is_int_power_of_3_false(self):
+        for i in (0, 2, 8, 33, -99, 88):
+            with self.subTest(i=i):
+                self.assertFalse(is_int_power_of_3(i))
 
     def test_add_until_result_single(self):
         expected = 5
@@ -78,77 +83,87 @@ class Task20Tests(unittest.TestCase):
         actual = find_missing_number(input_list)
         self.assertEqual(expected, actual)
 
-    def test_count_until_tuple_find(self):
-        input_list = [1, 2, 3, (1, 2), 3]
-        expected = 3
-        actual = count_until_tuple_find(input_list)
-        self.assertEqual(expected, actual)
-
-    def test_reverse_string(self):
-        input_str = 'Hello World and Coders'
-        expected = 'sredoC dna dlroW olleH'
-        actual = reverse_string(input_str)
-        self.assertEqual(expected, actual)
-
-    def test_convert_minutes_to_hours(self):
-        input_int = 63
-        expected = '1:3'
-        actual = convert_minutes_to_hours(input_int)
-        self.assertEqual(expected, actual)
-
-    def test_get_largest_world(self):
-        input_str = 'fun&!! time'
-        expected = 'time'
-        actual = get_largest_world(input_str)
-        self.assertEqual(expected, actual)
-
-    def test_get_words_in_back_order(self):
-        input_str = 'My name is Michele'
-        expected = 'Michele is name My'
-        actual = get_words_in_back_order(input_str)
-        self.assertEqual(expected, actual)
-
     def test_gen_fibonacci_n_numbers(self):
-        input_int = 13
-        expected = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233]
-        actual = gen_fibonacci_n_numbers(input_int)
-        self.assertEqual(expected, actual)
+        with patch('builtins.input', return_value=13):
+            expected = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233]
+            actual = gen_fibonacci_n_numbers()
+            self.assertEqual(expected, actual)
 
-    def test_get_only_even(self):
-        input_list = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
-        expected = [4, 16, 36, 64, 100]
-        actual = get_only_even(input_list)
-        self.assertEqual(expected, actual)
 
-    def test_add_up_to_input_num(self):
-        input_int = 4
-        expected = 10
-        actual = add_up_to_input_num(input_int)
-        self.assertEqual(expected, actual)
+def test_count_until_tuple_find():
+    input_list = [1, 2, 3, (1, 2), 3]
+    expected = 3
+    actual = count_until_tuple_find(input_list)
+    assert expected == actual
 
-    def test_get_factorial(self):
-        input_int = 4
-        expected = 24
-        actual = get_factorial(input_int)
-        self.assertEqual(expected, actual)
 
-    def test_shift_letters_right(self):
-        input_str = 'abcd'
-        expected = 'bcdE'
-        actual = shift_letters_right(input_str)
-        self.assertEqual(expected, actual)
+def test_reverse_string():
+    input_str = 'Hello World and Coders'
+    expected = 'sredoC dna dlroW olleH'
+    actual = reverse_string(input_str)
+    assert expected == actual
 
-    def test_get_letters_in_alphabet_order(self):
-        input_str = 'edcba'
-        expected = 'abcde'
-        actual = get_letters_in_alphabet_order(input_str)
-        self.assertEqual(expected, actual)
 
-    def test_compare_two_number(self):
-        actual = compare_two_number(0.0, 0)
-        self.assertEqual('-1', compare_two_number(0.0, 0))
-        self.assertTrue(compare_two_number(-1, 1.0))
-        self.assertFalse(compare_two_number(0, -1.0))
+def test_convert_minutes_to_hours():
+    input_int = 63
+    expected = '1:3'
+    actual = convert_minutes_to_hours(input_int)
+    assert expected == actual
+
+
+def test_get_largest_world():
+    input_str = 'fun&!! time'
+    expected = 'time'
+    actual = get_largest_world(input_str)
+    assert expected == actual
+
+
+def test_get_words_in_back_order():
+    input_str = 'My name is Michele'
+    expected = 'Michele is name My'
+    actual = get_words_in_back_order(input_str)
+    assert expected == actual
+
+
+def test_get_only_even():
+    input_list = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+    expected = [4, 16, 36, 64, 100]
+    actual = get_only_even(input_list)
+    assert expected == actual
+
+
+def test_add_up_to_input_num():
+    input_int = 4
+    expected = 10
+    actual = add_up_to_input_num(input_int)
+    assert expected == actual
+
+
+def test_get_factorial():
+    input_int = 4
+    expected = 24
+    actual = get_factorial(input_int)
+    assert expected == actual
+
+
+def test_shift_letters_right():
+    input_str = 'abcd'
+    expected = 'bcdE'
+    actual = shift_letters_right(input_str)
+    assert expected == actual
+
+
+def test_get_letters_in_alphabet_order():
+    input_str = 'edcba'
+    expected = 'abcde'
+    actual = get_letters_in_alphabet_order(input_str)
+    assert expected == actual
+
+
+def test_compare_two_number():
+    assert compare_two_number(0.0, 0) == '-1'
+    assert compare_two_number(-1, 1.0) is True
+    assert compare_two_number(0, -1.0) is False
 
 
 if __name__ == '__main__':

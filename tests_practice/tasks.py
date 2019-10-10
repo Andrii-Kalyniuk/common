@@ -5,10 +5,10 @@ def common_in_2_lists(list_a, list_b):
     """
     Task 1:
     Take two lists, say for example these two:
-    a = [1,1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
-    b = [1,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-    and write a program that returns a list that contains only
-    the elements that are common between the lists (without duplicates)
+      a =[1,1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+      b =[1,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+     and write a program that returns a list that contains only
+     the elements that are common between the lists (without duplicates)
     """
     return sorted(list(set(list_a + list_b)))
 
@@ -148,7 +148,7 @@ def convert_minutes_to_hours(minutes):
     converts to (ie. if num = 63 then the output should be 1:3).
     Separate   the number of hours and minutes with a colon.
     """
-    return f'{minutes // 60}:{minutes % 60}'
+    return '{}:{}'.format(minutes // 60, minutes % 60)
 
 
 def remove_punctuation(some_str):
@@ -157,8 +157,9 @@ def remove_punctuation(some_str):
     ASCII letter return without changes
     Function using in Task 12 and Task 13
     :param some_str: str
-    :return: list of signs input string with ASCII letter or space
+    :return: list of signs from input string with ASCII letter or space
     """
+
     def replace_punct_sign_by_space(sign):
         if sign.lower() not in string.ascii_lowercase:
             return ' '
@@ -199,7 +200,7 @@ def get_words_in_back_order(some_str):
     return ' '.join(reversed(only_words))
 
 
-def gen_fibonacci_n_numbers(num_of_elements):
+def gen_fibonacci_n_numbers():
     """
     Task 14:
     Write a program that asks the user how many Fibonacci numbers
@@ -211,14 +212,16 @@ def gen_fibonacci_n_numbers(num_of_elements):
     two numbers in the sequence.
     The sequence looks like this: 1, 1, 2, 3, 5, 8, 13, …)
     """
+
     def fibonacci_generator():
         next_n, current_n = 0, 1
         while True:
             yield current_n + next_n
             next_n, current_n = current_n + next_n, next_n
 
+    num_of_elements = int(input('How many Fibonacci numbers to generate?'))
     fibonacci_seq = fibonacci_generator()
-    return [next(fibonacci_seq) for _ in range(num_of_elements)]
+    return [next(fibonacci_seq) for i in range(num_of_elements)]
 
 
 def get_only_even(num_list):
