@@ -168,3 +168,9 @@ class TestHouse:
         expected_res = 115
 
         assert actual_res == expected_res
+
+    def test_get_room_total_square(self):
+        actual_res = self.house.get_room_total_square()
+        expected_res = 115 + 2 * (10 * 14)
+
+        assert actual_res == expected_res
