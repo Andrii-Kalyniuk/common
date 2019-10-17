@@ -38,14 +38,15 @@ class Cat:
 
     """
 
-    def __init__(self, age, saturation_level=50):
+    def __init__(self, age):
         self.age = age
-        self.saturation_level = saturation_level
-        self._set_average_speed()
+        self.saturation_level = 50
+        self.average_speed = self._set_average_speed()
+
+    food_energy = {'fodder': 10, 'apple': 5, 'milk': 2}
 
     def eat(self, product):
-        food_energy = {'fodder': 10, 'apple': 5, 'milk': 2}
-        self._increase_saturation_level(food_energy.get(product, 0))
+        self._increase_saturation_level(self.food_energy.get(product, 0))
 
     def _reduce_saturation_level(self, value):
         self.saturation_level -= value
@@ -59,12 +60,11 @@ class Cat:
 
     def _set_average_speed(self):
         if self.age <= 7:
-            self.average_speed = 12
+            return 12
         elif 7 < self.age <= 10:
-            self.average_speed = 9
+            return 9
         elif self.age > 10:
-            self.average_speed = 6
-        return self.average_speed
+            return 6
 
     def run(self, hours):
         ran_km = self.average_speed * hours
@@ -104,18 +104,15 @@ class Cheetah(Cat):
 
     """
 
-    def eat(self, product):
-        food_energy = {'gazelle': 30, 'rabbit': 15}
-        self._increase_saturation_level(food_energy.get(product, 0))
+    food_energy = {'gazelle': 30, 'rabbit': 15}
 
     def _set_average_speed(self):
         if self.age <= 5:
-            self.average_speed = 90
+            return 90
         elif 5 < self.age <= 15:
-            self.average_speed = 75
+            return 75
         elif self.age > 15:
-            self.average_speed = 40
-        return self.average_speed
+            return 40
 
 
 class Wall:
@@ -141,7 +138,7 @@ class Wall:
         return self.width * self.height
 
     def number_of_rolls_of_wallpaper(self, roll_width_m, roll_length_m):
-        if roll_width_m and roll_length_m:
+        if roll_width_m > 0 and roll_length_m > 0:
             count_of_lines_in_roll = roll_length_m / self.height
             count_of_lines = self.width // roll_width_m
             return count_of_lines / count_of_lines_in_roll
@@ -296,7 +293,7 @@ class House:
         self.__door = None
 
     def create_wall(self, width, height):
-        if width and height:
+        if width > 0 and height > 0:
             if len(self.__walls) < 4:
                 self.__walls.append(Wall(width, height))
             else:
@@ -305,7 +302,7 @@ class House:
             raise ValueError('Value must be not 0')
 
     def create_roof(self, width, height, roof_type):
-        if width and height:
+        if width > 0 and height > 0:
             if not self.__roof:
                 self.__roof = Roof(width, height, roof_type)
             else:
@@ -314,13 +311,13 @@ class House:
             raise ValueError('Value must be not 0')
 
     def create_window(self, width, height):
-        if width and height:
+        if width > 0 and height > 0:
             self.__windows.append(Window(width, height))
         else:
             raise ValueError('Value must be not 0')
 
     def create_door(self, width, height):
-        if width and height:
+        if width > 0 and height > 0:
             if not self.__door:
                 self.__door = Door(width, height)
             else:
@@ -356,7 +353,7 @@ class House:
         return self.__door.door_square()
 
     def get_number_of_rolls_of_wallpapers(self, roll_width_m, roll_length_m):
-        if roll_width_m and roll_length_m:
+        if roll_width_m > 0 and roll_length_m > 0:
             return sum([wall.number_of_rolls_of_wallpaper(roll_width_m,
                                                           roll_length_m)
                         for wall in self.__walls])
@@ -370,7 +367,9 @@ class House:
         """
         :return: the floor area of the room
         """
-        # when we have classic rectangle room, S = ab
+        """
+        when we have classic rectangle room, S = ab
+        """
         if self.get_count_of_walls() == 2:
             room_square = 1
             for wall in self.__walls:
