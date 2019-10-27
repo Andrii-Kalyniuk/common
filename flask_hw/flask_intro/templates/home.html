@@ -1,25 +1,17 @@
 {%extends 'base.html'%}
 {% block vegan_menu %}
 
-<style>.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
-
-</style>
-
-<p style="text-align:center;font-size:300%;">
-    <a href="/vegetables">Vegetables
+<p class="text_center">
+    <a href={{url_for('get_vegetables')}}>Vegetables
         <img src="https://www.clipartwiki.com/clipimg/detail/15-151313_fruit-vegetables-clip-art-vegetable-clip-art-fruits.png"
-             alt="vegetables_img" class="center" style="width:240px;height:186px;border:0;">
+             alt="vegetables_img" class="img_center">
     </a>
 </p>
-<p style="text-align:center;font-size:300%;">
-    <a href="/fruits">Fruits
+<p></p>
+<p class="text_center">
+    <a href={{url_for('get_fruits')}}>Fruits
         <img src="https://www.netclipart.com/pp/m/1-16049_clip-art-food-basket-thanksgiving-food-baskets-clipart.png"
-             alt="fruits_img" class="center" style="width:240px;height:186px;border:0">
+             alt="fruits_img" class="img_center">
     </a>
 </p>
 {% endblock %}

@@ -5,6 +5,7 @@
     <title>Base</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href={{url_for('static', filename='css/styles.css')}}>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -35,25 +36,18 @@
         <!-- Links -->
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home
+                <a class="nav-link" href={{url_for('get_home')}}>Home
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
-            <!--            <li class="nav-item">-->
-            <!--                <a class="nav-link" href="#">Features</a>-->
-            <!--            </li>-->
-            <!--            <li class="nav-item">-->
-            <!--                <a class="nav-link" href="#">Pricing</a>-->
-            <!--            </li>-->
 
             <!-- Dropdown -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">Meatless menu</a>
                 <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/vegetables">Vegetables</a>
-                    <a class="dropdown-item" href="/fruits">Fruits</a>
-                    <!--                    <a class="dropdown-item" href="#">Something else here</a>-->
+                    <a class="dropdown-item" href={{url_for('get_vegetables')}}>Vegetables</a>
+                    <a class="dropdown-item" href={{url_for('get_fruits')}}>Fruits</a>
                 </div>
             </li>
 
@@ -89,7 +83,7 @@
                 <!-- Content -->
                 <h5 class="text-uppercase font-weight-bold">Try it! No meat.</h5>
                 <p>Uncontrolled intake of plant foods can lead to diarrhea, constipation, nausea,
-                    vomiting, dyspepsia, flatulence, asthenia, obesity, and financial loss etc.</p>
+                    vomiting, dyspepsia, flatulence, asthenia, obesity, and financial loss etc. But you can try ...</p>
 
             </div>
             <!-- Grid column -->
