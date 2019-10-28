@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<style>
+    #images {
+        text-align: center;
+    }
+
+    *:focus {
+        outline: 0;
+    }
+</style>
+<body>
+<div id="images">
+    <img src="{{url_for('static', filename='flask-homework.png')}}" usemap="#image-map" width="650px" height="360px">
+    <map name="image-map">
+        <area href="https://en.wikipedia.org/wiki/Alarm_clock" coords="20,20,167,132" shape="rect">
+        <area href="https://en.wikipedia.org/wiki/Headphones" coords="392,143,242,11" shape="rect">
+        <area href="https://en.wikipedia.org/wiki/IPod" coords="477,7,630,152" shape="rect">
+        <area href="https://en.wikipedia.org/wiki/Calculator" coords="17,196,135,344" shape="rect">
+        <area href="https://en.wikipedia.org/wiki/Coffeemaker"
+              coords="270,206,378,208,374,328,269,331,248,258,254,248,265,238,259,227" shape="poly">
+        <area href="https://en.wikipedia.org/wiki/Battery_charger" coords="477,239,614,307" shape="rect">
+    </map>
+</div>
+</body>
+</html>
