@@ -1,13 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home|HW "Advanced Flask"</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
 
-</body>
-</html>
+{% block title %} Home {% endblock %}
+
+{% block content_title %}
+<u> Home </u>
+<h2 class="text_center"><a href="{{ url_for('products.get_all_products') }}">Products</a></h2>
+<h2 class="text_center"><a href="{{ url_for('supermarkets.get_all_supermarkets') }}">Supermarkets</a></h2>
+{% endblock %}
+
+{% block content %}
+<p class="text_center">
+    Your can:<br>
+    Add product/supermarkets.<br>
+    Get all products/supermarkets.<br>
+    Filter products by price.<br>
+    Filter markets by location.<br>
+    Get particular product/supermarket by id.</p>
+{% endblock %}

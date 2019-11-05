@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Products {% endblock %}
+
+{% block content_title %} <u> Products </u> {% endblock %}
+
+{% block content %}
+
+    <ul>
+    {% if args %}
+        <p>{{args}}</p>
+        {% for product in products_all|selectattr('price', 'eq', args['price']) %}
+        <li><a href="{{ url_for('products.show_product', uu_id=product['id']) }}">{{ product['name'] }}</a></li>
+        {% endfor %}
+    {% else %}
+        <p>no args</p>
+        {% for product in products_all %}
+        <li><a href="{{ url_for('products.show_product', uu_id=product['id']) }}">{{ product['name'] }}</a></li>
+        {% endfor %}
+    {% endif %}
+
+    </ul>
+
+{% endblock %}
