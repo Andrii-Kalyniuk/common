@@ -3,42 +3,56 @@
 
 {% block title %} Products {% endblock %}
 
-{% block content_title %} <u> Products </u> {% endblock %}
+{% block content_title %} <a href="{{ url_for('products.get_all_products') }}"><u> Products </u></a> {% endblock %}
 
 {% block content %}
-<form class="text_center" action="{{ url_for('products.get_all_products') }}" method="get">
+<form action="{{ url_for('products.get_all_products') }}" method="get">
   Filter by price:
   <input type="text" name="price">
   <input type="submit" value="Find">
 </form>
 
-<form class="text_center" action="{{ url_for('products.get_all_products') }}" method="get">
+<form action="{{ url_for('products.get_all_products') }}" method="get">
   Filter by id:
   <input type="text" name="id">
   <input type="submit" value="Find">
 </form>
+
 <p><a href="{{ url_for('products.show_add_product_form') }}">Add product</a></p>
 
-    <ul>
+<table>
+  <tr>
+    <th>Product name</th>
+    <th>Price</th>
+    <th>id</th>
+  </tr>
+
     {% if args %}
-        <p>{{args}}</p>
         {% if 'price' in args %}
             {% set arg = 'price' %}
             {% endif %}
         {% if 'id' in args %}
             {% set arg = 'id'%}
             {% endif %}
+            <p>Filtred by {{ arg }} = {{ args[arg] }}</p>
         {% for product in products_all|selectattr(arg, 'eq', args[arg]) %}
-        <li><a href="{{ url_for('products.show_product', uu_id=product['id']) }}">{{ product['name'] }}</a></li>
+    <tr>
+        <td><a href="{{ url_for('products.show_product', uu_id=product['id']) }}">{{ product['name'] }}</a></td>
+        <td>{{ product['price'] }}</td>
+        <td>{{ product['id'] }}</td>
+    </tr>
         {% endfor %}
     {% else %}
-        <p>no args</p>
-        {# in case without argumensts #}
+        <p>Not filtered</p>
+        {# in case we have no argumensts #}
         {% for product in products_all %}
-        <li><a href="{{ url_for('products.show_product', uu_id=product['id']) }}">{{ product['name'] }}</a></li>
+    <tr>
+        <td><a href="{{ url_for('products.show_product', uu_id=product['id']) }}">{{ product['name'] }}</a></td>
+        <td>{{ product['price'] }}</td>
+        <td>{{ product['id'] }}</td>
+    </tr>
         {% endfor %}
     {% endif %}
 
-    </ul>
-
+    </table>
 {% endblock %}

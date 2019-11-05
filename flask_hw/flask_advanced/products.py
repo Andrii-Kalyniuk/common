@@ -3,8 +3,10 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from database import DB
 from models import Product
 
-products = Blueprint('products', __name__, url_prefix='/product',
-                     template_folder='./products/templates')
+products = Blueprint('products', __name__,
+                     url_prefix='/product',
+                     template_folder='./products/templates',
+                     static_folder='./products/static')
 
 
 @products.route('/', methods=['GET'])
@@ -39,4 +41,4 @@ def show_product(uu_id):
     for product in products_all:
         if str(uu_id) in product.values():
             product_to_show = product
-    return render_template('product_info.html', product=product_to_show)
+    return render_template('product.html', product=product_to_show)
