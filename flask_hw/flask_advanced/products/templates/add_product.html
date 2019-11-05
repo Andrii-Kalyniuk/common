@@ -8,15 +8,15 @@
 {% endblock %}
 
 {% block content %}
-<form>
+<form action="{{ url_for('products.add_product' )}}" method="post">
   Product name:<br>
   <input type="text" name="name"><br>
   Product price:<br>
-  <input type="text" name="price">
+  <input type="text" name="price"><br>
   Product description:<br>
-  <input type="text" name="description">
+  <input type="text" name="description"><br>
   Product image name:<br>
-  <input type="text" name="img_name">:<br><br>
-  <input type="submit" value="Submit">
+  <input type="text" name="img_name"><br><br>
+  <input type="submit" value="Add product">
 </form>
 {% endblock %}
