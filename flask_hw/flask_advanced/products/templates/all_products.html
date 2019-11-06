@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from 'macros.html' import disable_clicked %}
 
 
 {% block title %} Products {% endblock %}
@@ -37,7 +38,7 @@
             <p>Filtered by {{ arg }} = {{ args[arg] }}</p>
         {% for product in products_all|selectattr(arg, 'eq', args[arg]) %}
     <tr>
-        <td><a href="{{ url_for('products.show_product', uu_id=product['id']) }}">{{ product['name'] }}</a></td>
+        <td><a href="{{ url_for('products.show_product', uu_id=product['id']) }}" class="{{ disable_clicked(session[product.id]) }}">{{ product['name'] }}</a></td>
         <td>{{ product['price'] }}</td>
         <td>{{ product['id'] }}</td>
     </tr>
@@ -47,7 +48,7 @@
         {# in case we have no argumensts #}
         {% for product in products_all %}
     <tr>
-        <td><a href="{{ url_for('products.show_product', uu_id=product['id']) }}">{{ product['name'] }}</a></td>
+        <td><a href="{{ url_for('products.show_product', uu_id=product['id']) }}" class="{{ disable_clicked(session[product.id]) }}">{{ product['name'] }}</a></td>
         <td>{{ product['price'] }}</td>
         <td>{{ product['id'] }}</td>
     </tr>

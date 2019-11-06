@@ -1,0 +1,7 @@
+{% macro disable_clicked(session_key) %}
+{% if session_key %}
+  hrefDisabled
+{% else %}
+  hrefEnabled
+{% endif %}
+{% endmacro %}

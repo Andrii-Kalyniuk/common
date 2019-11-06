@@ -20,3 +20,14 @@ table, th, td {
   border-collapse: collapse;
   padding: 5px;
 }
+
+.hrefDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+.hrefEnabled {
+}

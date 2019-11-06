@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 
 from database import DB
 from models import Product
@@ -36,9 +36,11 @@ def add_product():
 
 @products.route('/<uuid:uu_id>')
 def show_product(uu_id):
+    uu_id = str(uu_id)
+    session[uu_id] = True
     products_all = [product.__dict__ for product in DB['products']]
     product_to_show = None
     for product in products_all:
-        if str(uu_id) in product.values():
+        if uu_id in product.values():
             product_to_show = product
     return render_template('product.html', product=product_to_show)
