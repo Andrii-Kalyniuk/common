@@ -26,10 +26,10 @@ def show_add_market_form():
 def add_market():
     data = request.form.to_dict()
     DB['supermarkets'].append(Supermarket(name=data.get('name'),
-                                      location=data.get('location'),
-                                      img_name=data.get('img_name'),
-                                      )
-                          )
+                                          location=data.get('location'),
+                                          img_name=data.get('img_name'),
+                                          )
+                              )
     return redirect(url_for('supermarkets.get_all_supermarkets'))
 
 

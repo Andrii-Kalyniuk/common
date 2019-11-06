@@ -13,6 +13,7 @@ def db_create():
 def app_create():
     db_create()
     app = Flask(__name__)
+    app.config['SECURE KEY'] = 'Not_very_strong_keY'
     app.register_blueprint(supermarkets)
     app.register_blueprint(products)
     return app
@@ -25,6 +26,11 @@ app = app_create()
 def get_home_page():
     home_page_menu = ('product', 'supermarket')
     return render_template('home.html', menu=home_page_menu)
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('error_404.html')
 
 
 if __name__ == "__main__":
