@@ -34,7 +34,7 @@
         {% if 'id' in args %}
             {% set arg = 'id'%}
             {% endif %}
-            <p>Filtred by {{ arg }} = {{ args[arg] }}</p>
+            <p>Filtered by {{ arg }} = {{ args[arg] }}</p>
         {% for product in products_all|selectattr(arg, 'eq', args[arg]) %}
     <tr>
         <td><a href="{{ url_for('products.show_product', uu_id=product['id']) }}">{{ product['name'] }}</a></td>

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Supermarket info {% endblock %}
+
+{% block content_title %}
+<u>Supermarket info</u>
+
+{% endblock %}
+
+{% block content %}
+    <h1>{{ market.name }}</h1>
+    <p><b>Location</b>: {{ market.location }}</p>
+    <p><b>ID</b>: {{ market.id }}</p>
+    <p><b>Image</b>: {{ market.img_name }}</p>
+    <img class="img_center" alt={{ market.img_name }} src="{{ url_for('supermarkets.static', filename=market.img_name) }}">
+
+<a href="{{ url_for('supermarkets.get_all_supermarkets') }}"><< back to Supermarkets</a>
+{% endblock %}
