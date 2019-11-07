@@ -1,8 +1,8 @@
 from flask import Flask, render_template
 
 from database import DB
-from supermarkets import supermarkets
-from products import products
+from products.products import products
+from supermarkets.supermarkets import supermarkets
 
 
 def db_create():
@@ -12,7 +12,10 @@ def db_create():
 
 def app_create():
     db_create()
-    app = Flask(__name__)
+    app = Flask(__name__,
+                static_folder='home/static',
+                template_folder='home/templates'
+                )
     app.config['SECRET_KEY'] = 'Not_very_strong_keY'
     app.register_blueprint(supermarkets)
     app.register_blueprint(products)

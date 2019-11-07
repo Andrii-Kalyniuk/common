@@ -5,8 +5,8 @@ from models import Supermarket
 
 supermarkets = Blueprint('supermarkets', __name__,
                          url_prefix='/supermarket',
-                         template_folder='./supermarkets/templates',
-                         static_folder='./supermarkets/static')
+                         template_folder='../supermarkets/templates',
+                         static_folder='../supermarkets/static')
 
 
 @supermarkets.route('/', methods=['GET'])

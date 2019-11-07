@@ -5,8 +5,8 @@ from models import Product
 
 products = Blueprint('products', __name__,
                      url_prefix='/product',
-                     template_folder='./products/templates',
-                     static_folder='./products/static')
+                     template_folder='../products/templates',
+                     static_folder='../products/static')
 
 
 @products.route('/', methods=['GET'])
