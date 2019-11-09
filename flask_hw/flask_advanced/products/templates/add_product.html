@@ -10,7 +10,7 @@
 {% block content %}
 <form action="{{ url_for('products.add_product' )}}" method="post" enctype="multipart/form-data">
   Product name:<br>
-  <input type="text" name="name"><br>
+  <input type="text" name="name" required><br>
   Product price:<br>
   <input type="number" name="price" min="0" step="0.01"><br>
   Product description:<br>
