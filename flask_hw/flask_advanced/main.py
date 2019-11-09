@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 
-from database import DB
+from db.database import DB, DB_test
+from models import Product, Supermarket
 from products.products import products
 from supermarkets.supermarkets import supermarkets
 
@@ -10,8 +11,31 @@ def db_create():
     DB['supermarkets'] = []
 
 
+def db_fill_up():
+    def add_product(data):
+        DB['products'].append(Product(name=data.get('name'),
+                                      description=data.get('description'),
+                                      img_name=data.get('img_name'),
+                                      price=data.get('price')
+                                      )
+                              )
+
+    def add_market(data):
+        DB['supermarkets'].append(Supermarket(name=data.get('name'),
+                                              location=data.get('location'),
+                                              img_name=data.get('img_name')
+                                              )
+                                  )
+
+    for product in DB_test['products']:
+        add_product(product)
+    for market in DB_test['supermarkets']:
+        add_market(market)
+
+
 def app_create():
     db_create()
+    db_fill_up()
     app = Flask(__name__,
                 static_folder='home/static',
                 template_folder='home/templates'

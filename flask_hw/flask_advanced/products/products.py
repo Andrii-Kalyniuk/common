@@ -1,6 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+import os
 
-from database import DB
+from flask import (Blueprint, render_template, request,
+                   redirect, url_for, session)
+from werkzeug.utils import secure_filename
+
+from db.database import DB
 from models import Product
 
 products = Blueprint('products', __name__,
@@ -25,9 +29,18 @@ def show_add_product_form():
 @products.route('/', methods=['POST'])
 def add_product():
     data = request.form.to_dict()
+    file = request.files['img_name']
+    if file:
+        filename = secure_filename(file.filename)
+        path_to_img = os.path.join('products/static',
+                                   secure_filename(filename)
+                                   )
+        file.save(path_to_img)
+    else:
+        filename = None
     DB['products'].append(Product(name=data.get('name'),
                                   description=data.get('description'),
-                                  img_name=data.get('img_name'),
+                                  img_name=filename,
                                   price=data.get('price')
                                   )
                           )

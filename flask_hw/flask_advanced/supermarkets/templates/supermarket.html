@@ -13,7 +13,11 @@
     <p><b>Location</b>: {{ market.location }}</p>
     <p><b>ID</b>: {{ market.id }}</p>
     <p><b>Image</b>: {{ market.img_name }}</p>
-    <img class="img_center" alt={{ market.img_name }} src="{{ url_for('supermarkets.static', filename=market.img_name) }}">
+    {% if not market.img_name %}
+    <img class="img_center" alt="No image yet" src="{{ url_for('supermarkets.static', filename='no_image.jpg') }}">
+    {% else %}
+    <img class="img_center" alt="{{ market.img_name }}" src="{{ url_for('supermarkets.static', filename=market.img_name) }}">
+    {% endif %}
 
-<a href="{{ url_for('supermarkets.get_all_supermarkets') }}"><< back to Supermarkets</a>
+    <a href="{{ url_for('supermarkets.get_all_supermarkets') }}"><< back to Supermarkets</a>
 {% endblock %}
