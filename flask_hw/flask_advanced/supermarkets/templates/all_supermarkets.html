@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Supermarkets {% endblock %}
+
+{% block content_title %} <a href="{{ url_for('supermarkets.get_all_supermarkets') }}"><u> Supermarkets </u></a> {% endblock %}
+
+{% block content %}
+<form action="{{ url_for('supermarkets.get_all_supermarkets') }}" method="get">
+  Filter by location:
+  <input type="text" name="location">
+  <input type="submit" value="Find">
+</form>
+
+<form action="{{ url_for('supermarkets.get_all_supermarkets') }}" method="get">
+  Filter by id:
+  <input type="text" name="id">
+  <input type="submit" value="Find">
+</form>
+
+<p><a href="{{ url_for('supermarkets.show_add_market_form') }}">Add supermarket</a></p>
+
+<table>
+  <tr>
+    <th>Supermarket name</th>
+    <th>Location</th>
+    <th>id</th>
+  </tr>
+
+    {% if args %}
+        {% if 'location' in args %}
+            {% set arg = 'location' %}
+            {% endif %}
+        {% if 'id' in args %}
+            {% set arg = 'id'%}
+            {% endif %}
+            <p>Filtered by {{ arg }} = {{ args[arg] }}</p>
+        {% for market in markets_all|selectattr(arg, 'eq', args[arg]) %}
+    <tr>
+        <td><a href="{{ url_for('supermarkets.show_market', uu_id=market['id']) }}">{{ market['name'] }}</a></td>
+        <td>{{ market['location'] }}</td>
+        <td>{{ market['id'] }}</td>
+    </tr>
+        {% endfor %}
+    {% else %}
+        <p>Not filtered</p>
+        {# in case we have no argumensts #}
+        {% for market in markets_all %}
+    <tr>
+        <td><a href="{{ url_for('supermarkets.show_market', uu_id=market['id']) }}">{{ market['name'] }}</a></td>
+        <td>{{ market['location'] }}</td>
+        <td>{{ market['id'] }}</td>
+    </tr>
+        {% endfor %}
+    {% endif %}
+
+    </table>
+{% endblock %}
