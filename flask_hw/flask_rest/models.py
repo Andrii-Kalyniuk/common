@@ -8,7 +8,7 @@ class Room:
         self.level = level
         self.status = status
         self.price = price
-        self.id = str(uuid.uuid())
+        self.id = str(uuid.uuid4())
 
 
 class Tenants:

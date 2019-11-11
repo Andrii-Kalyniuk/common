@@ -1,17 +1,23 @@
 import os
 
 
-class TestConfig:
+class Config:
+    DEBUG = False
+
+
+class TestConfig(Config):
     DEBUG = True
 
 
-class ProdConfig:
-    DEBUG = False
+class ProdConfig(Config):
+    pass
 
 
 def run_config():
     env = os.environ.get("ENV")
     if env == "TEST":
         return TestConfig
-    else:
+    elif env == "PROD":
         return ProdConfig
+    else:
+        return Config
