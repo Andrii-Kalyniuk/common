@@ -1,38 +1,42 @@
-from flask import request
-from flask_restful import Resource, fields, reqparse
+from flask_restful import Resource, reqparse, fields
 
 from db.db import DB
-from models import Room
 
 parser = reqparse.RequestParser()
-parser.add_argument('status')
+parser.add_argument('name')
+parser.add_argument('passport_id')
+parser.add_argument('sex')
+parser.add_argument('address')
+parser.add_argument('room_number')
 
 
-class Rooms(Resource):
-    room_structure = {
-        "number": fields.Integer,
-        "level": fields.String,
-        "status": fields.String,
-        "price": fields.Float,
-        "id": fields.String
+class Tenants(Resource):
+    tenants_structure = {
+        "name": fields.String,
+        "age": fields.String,
+        "sex": fields.String,
+        "address": fields.String,
+        "room_number": fields.Integer,
+        "passport_id": fields.String,
     }
 
     def get(self, id_=None):
-        room_all = [room.__dict__ for room in DB['rooms']]
+        tenants_all = [tenant.__dict__ for tenant in DB['tenants']]
         args = parser.parse_args()
         print(20 * '*', id_)
         print(20 * '*', args)
         if id_:
-            room = list(filter(lambda r: id_ == r.id, DB['rooms']))
-            if room:
-                return room[0].__dict__
+            tenant = list(filter(lambda t: id_ == t.passport_id,
+                                 DB['tenants']))
+            if tenant:
+                return tenant[0].__dict__
             else:
-                return {"message": "room not found"}, 404
+                return {"message": "tenant not found"}, 404
         else:
-            if args['status']:
-                return list(filter(lambda r: args['status'] == r['status'],
-                                   room_all))
-        return room_all
+            if args['name']:
+                return list(filter(lambda r: args['name'] == r['name'],
+                                   tenants_all))
+        return tenants_all
 
     def post(self):
         data = request.json
@@ -72,4 +76,3 @@ class Rooms(Resource):
                 DB['rooms'].remove(room_to_del[0])
                 return {"message": "room was deleted"}
             return {"message": "room was not found"}, 404
-

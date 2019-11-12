@@ -13,20 +13,19 @@ class Room:
 
 class Tenants:
 
-    def __init__(self, name, passport_id, age,
-                 sex, address, room_number):
+    def __init__(self, name, age, sex, address, room_number):
         self.name = name
-        self.passport_id = passport_id
         self.age = age
         self.sex = sex
-        self.sex = address
-        self.sex = room_number
+        self.address = address
+        self.room_number = room_number
+        self.passport_id = str(uuid.uuid4())
 
 
 class Staff:
 
-    def __init__(self, name, passport_id, position, salary):
+    def __init__(self, name, position, salary):
         self.name = name
-        self.passport_id = passport_id
         self.position = position
         self.salary = salary
+        self.passport_id = str(uuid.uuid4())
