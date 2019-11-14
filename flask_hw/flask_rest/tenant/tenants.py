@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.DEBUG)
 parser = reqparse.RequestParser()
 
 
-class Tenants(Resource):
+class TenantsRes(Resource):
 
     address_structure = {
         "city": fields.String,

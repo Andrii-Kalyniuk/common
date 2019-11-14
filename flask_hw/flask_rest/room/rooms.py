@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.DEBUG)
 parser = reqparse.RequestParser()
 
 
-class Rooms(Resource):
+class RoomsRes(Resource):
 
     def get(self, id_=None):
         room_all = [room.serialize() for room in DB['rooms']]

@@ -3,10 +3,10 @@ from flask_restful import Api
 
 from config import run_config
 from db.db import DB, fillup_db
-from routes.health import HealthCheck
-from routes.rooms import Rooms
-from routes.staff import StaffRes
-from routes.tenants import Tenants
+from room import rooms_bp
+from staff import staff_bp
+from tenant import tenants_bp
+from health import HealthCheck
 
 
 def db_setup():
@@ -18,11 +18,12 @@ def db_setup():
 
 db_setup()
 app = Flask(__name__)
+app.register_blueprint(rooms_bp)
+app.register_blueprint(tenants_bp)
+app.register_blueprint(staff_bp)
+
 api = Api(app)
 api.add_resource(HealthCheck, '/_health_check')
-api.add_resource(Rooms, '/api/v0.1/rooms', '/api/v0.1/rooms/<id_>')
-api.add_resource(StaffRes, '/api/v0.1/staff', '/api/v0.1/staff/<id_>')
-api.add_resource(Tenants, '/api/v0.1/tenants', '/api/v0.1/tenants/<id_>')
 
 if __name__ == "__main__":
     app.config.from_object(run_config())
