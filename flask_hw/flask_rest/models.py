@@ -10,8 +10,11 @@ class Room:
         self.price = price
         self.id = str(uuid.uuid4())
 
+    def serialize(self):
+        return self.__dict__
 
-class Tenants:
+
+class Tenant:
 
     def __init__(self, name, age, sex, address, room_number):
         self.name = name
