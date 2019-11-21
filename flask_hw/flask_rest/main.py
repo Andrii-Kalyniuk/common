@@ -3,7 +3,7 @@ from flask_restful import Api
 
 from config import run_config
 from db.db import DB, fillup_db
-from room import rooms_bp
+from api.room import rooms_bp
 from staff import staff_bp
 from tenant import tenants_bp
 from health import HealthCheck
