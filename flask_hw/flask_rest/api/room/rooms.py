@@ -1,14 +1,13 @@
 import logging
 
 from flask import request
-from flask_restful import Resource, reqparse, marshal_with
+from flask_restful import Resource, marshal_with
 
 from api.room.room_parsers import data_valid_for
 from api.room.structure import room_structure
 from db import Rooms, db
 
 logging.basicConfig(level=logging.DEBUG)
-parser = reqparse.RequestParser()
 
 
 class RoomsRes(Resource):
@@ -35,6 +34,7 @@ class RoomsRes(Resource):
             if args['status']:
                 rooms = Rooms.query.filter_by(status=args['status']).all()
                 return rooms, header
+            # add if status not found?
         return room_all, header
 
     def post(self):
