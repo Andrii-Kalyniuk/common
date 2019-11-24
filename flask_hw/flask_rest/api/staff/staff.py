@@ -91,7 +91,6 @@ class StaffRes(Resource):
             staff = Staff.query.get(passport_id)
             if staff:
                 if data:
-                    # problem when user don't give passport_id
                     if data.get('passport_id') != passport_id and\
                             Staff.query.get(data.get('passport_id')):
                         msg = "passport_id" \

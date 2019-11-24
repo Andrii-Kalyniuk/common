@@ -36,7 +36,7 @@ class TenantsRes(Resource):
             if args['name']:
                 tenants = Tenants.query.filter_by(name=args['name']).all()
                 return tenants, header
-            # add if name not found?
+            # todo:add if name not found?
         return tenants_all, header
 
     def post(self):

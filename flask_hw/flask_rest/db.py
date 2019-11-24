@@ -1,5 +1,6 @@
 import logging
 
+from flask import current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -45,10 +46,14 @@ def fill_up_db():
     db.session.commit()
     logging.info('---Previous database has been deleted---')
     db.create_all()
-    room_0 = Rooms(number=42, level='Lux', status='closed', price=1000)
-    room_1 = Rooms(number=7, level='Classic', status='available', price=59.99)
-    room_2 = Rooms(number=69, level='VIP', status='available', price=9000)
-    room_3 = Rooms(number=11, level='Loft', status='closed', price=10)
+    room_0 = Rooms(number=42, level='Lux', status='closed', price=1000,
+                   tenant_id='cc3333')
+    room_1 = Rooms(number=7, level='Classic', status='available',
+                   price=59.99, tenant_id='cc3333')
+    room_2 = Rooms(number=69, level='VIP', status='available',
+                   price=9000, tenant_id='zz0101')
+    room_3 = Rooms(number=11, level='Loft', status='closed', price=10,
+                   tenant_id='zz0101')
     staff_0 = Staff(passport_id='aa1111', name='Taylor',
                     position='waiter', salary=100.0)
     staff_1 = Staff(passport_id='et0000', name='Hannibal',

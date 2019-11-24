@@ -68,10 +68,15 @@ class RoomsRes(Resource):
                         msg = f"number {args['number']} already exists"
                         return {"message": msg}, 400
                     else:
+                        # why it's not work?
+                        # room = Rooms(**args)
                         room.number = args['number']
                         room.level = args['level']
                         room.status = args['status']
                         room.price = args['price']
+                        # todo: what if tenant_id updated
+                        #  with value that not in db yet?
+                        room.tenant_id = args['tenant_id']
                         db.session.commit()
                         return {}, 204
                 else:
@@ -98,6 +103,9 @@ class RoomsRes(Resource):
                         room.level = data.get('level', room.level)
                         room.status = data.get('status', room.status)
                         room.price = data.get('price', room.price)
+                        # todo: what if tenant_id updated
+                        #  with value that not in db yet?
+                        room.tenant_id = data.get('tenant_id', room.tenant_id)
                         db.session.commit()
                     return {"message": "room was updated"}
                 else:
