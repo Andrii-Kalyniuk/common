@@ -4,7 +4,7 @@ from flask_restful import Api
 from config import run_config
 from db.db import DB, fillup_db
 from api.room import rooms_bp
-from staff import staff_bp
+from api.staff import staff_bp
 from api.tenant import tenants_bp
 from api.health import HealthCheck
 

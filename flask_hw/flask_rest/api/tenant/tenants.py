@@ -3,7 +3,7 @@ import logging
 from flask import request
 from flask_restful import Resource, marshal_with
 
-# from api.tenant.tenant_parsers import data_valid_for
+
 from api.tenant.structure import tenant_structure
 from api.tenant.tenant_parsers import data_valid_for
 
@@ -95,8 +95,8 @@ class TenantsRes(Resource):
             tenant = Tenants.query.get(passport_id)
             if tenant:
                 if data:
-                    if data['passport_id'] != passport_id \
-                            and Tenants.query.get(data['passport_id']):
+                    if data.get('passport_id') != passport_id \
+                            and Tenants.query.get(data.get('passport_id')):
                         msg = "passport_id" \
                               f" {data['passport_id']} already exists"
                         return {"message": msg}, 400

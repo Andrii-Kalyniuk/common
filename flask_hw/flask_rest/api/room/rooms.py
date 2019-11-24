@@ -89,8 +89,8 @@ class RoomsRes(Resource):
             room = Rooms.query.get(number)
             if room:
                 if data:
-                    if data['number'] != number \
-                            and Rooms.query.get(data['number']):
+                    if data.get('number') != number \
+                            and Rooms.query.get(data.get('number')):
                         msg = f"number {data['number']} already exists"
                         return {"message": msg}, 400
                     else:
