@@ -22,3 +22,15 @@ def data_valid_for(req):
         parser.add_argument('name')
     return parser.parse_args(strict=True)
 
+
+def data_valid_for_staff_room(req):
+
+    parser = reqparse.RequestParser(bundle_errors=True)
+    if req in ['POST', 'PUT']:
+        parser.add_argument('staff_name', required=True)
+        parser.add_argument('room_number', type=int, required=True)
+        data = parser.parse_args(strict=True)
+        return data
+    elif req == 'GET':
+        parser.add_argument('name')
+    return parser.parse_args(strict=True)
