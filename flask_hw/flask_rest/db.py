@@ -44,7 +44,7 @@ def fill_up_db():
     db.session.remove()
     db.drop_all()
     db.session.commit()
-    logging.info('---Previous database has been deleted---')
+    logging.info('---Previous database has been DELETED---')
     db.create_all()
     room_0 = Rooms(number=42, level='Lux', status='closed', price=1000,
                    tenant_id='cc3333')
@@ -79,5 +79,5 @@ def fill_up_db():
     db.session.add(tenant_0)
     db.session.add(tenant_1)
     db.session.add(tenant_2)
-    logging.info('---The database was filled with test values---')
+    logging.info('---The database was FILLED with test values---')
     db.session.commit()

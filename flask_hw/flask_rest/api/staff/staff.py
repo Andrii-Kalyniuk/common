@@ -139,4 +139,16 @@ class StaffRooms(Resource):
         db.session.commit()
         logging.debug(room.serve_by)
         msg_content = f'{staff_name} added to the room #{room_number} service'
-        return {"message": msg_content}
+        return {"message": msg_content}, 201
+
+    def delete(self):
+        data = data_valid_for_staff_room('DELETE')
+        staff_name = data.get('staff_name')
+        room_number = data.get('room_number')
+        staff = Staff.query.filter_by(name=staff_name).first()
+        room = Rooms.query.filter_by(number=room_number).first()
+        room.serve_by.remove(staff)
+        db.session.commit()
+        msg_content = f'{staff_name} removed from' \
+                      f' the room #{room_number} service'
+        return {"message": msg_content}, 200

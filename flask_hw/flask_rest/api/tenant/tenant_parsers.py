@@ -15,6 +15,7 @@ def data_valid_for(req):
         data = parser.parse_args(strict=True)
         if all(data.values()):
             return data
+        # working like required=True and bundle_error=True analog
         else:
             not_none_keys = list(filter(lambda key: data[key], data))
             missing_args = list(valid_args ^ set(not_none_keys))
@@ -22,4 +23,3 @@ def data_valid_for(req):
     elif req == 'GET':
         parser.add_argument('name')
     return parser.parse_args(strict=True)
-

@@ -1,3 +1,4 @@
+import logging
 import os
 
 
@@ -30,9 +31,10 @@ class ProdConfig(Config):
 def get_config(env=None):
     if not env:
         env = os.environ.get("ENV")
-    if env == "TEST":
-        return TestConfig
-    elif env == "PROD":
-        return ProdConfig
-    else:
-        return Config
+    logging.info(env)
+    config_options = {
+        "TEST": TestConfig,
+        "PROD": ProdConfig
+    }
+    return config_options.get(env, Config)
+

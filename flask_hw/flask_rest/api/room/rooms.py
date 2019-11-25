@@ -28,7 +28,8 @@ class RoomsRes(Resource):
             if room:
                 return room, header
             else:
-                # how to display message instead of Rooms structure here?
+                # todo: how to display message instead of Rooms
+                #  structure with nulls?
                 return {"message": "room not found"}, 404, header
         else:
             if args['status']:
