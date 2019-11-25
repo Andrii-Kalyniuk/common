@@ -35,26 +35,23 @@ class RoomsRes(Resource):
             if args['status']:
                 rooms = Rooms.query.filter_by(status=args['status']).all()
                 return rooms, header
-            # add if status not found?
+            # todo: add if status not found?
         return room_all, header
 
     def post(self):
         data = data_valid_for('POST')
         logging.debug(data)
-        if isinstance(data, dict):
-            if not Rooms.query.get(data['number']):
-                new_room = Rooms(**data)
-                db.session.add(new_room)
-                db.session.commit()
-                location = {
-                    "Location": f'/api/v0.1/rooms/{str(new_room.number)}'
-                }
-                return {"message": "room was added successfully"}, \
-                       201, location
-            msg = f"number {data['number']} already exists"
-            return {"message": msg}, 400
-        return {"message": "not enough arguments to add room",
-                "missing args": data}, 400
+        if not Rooms.query.get(data['number']):
+            new_room = Rooms(**data)
+            db.session.add(new_room)
+            db.session.commit()
+            location = {
+                "Location": f'/api/v0.1/rooms/{str(new_room.number)}'
+            }
+            return {"message": "room was added successfully"}, \
+                   201, location
+        msg = f"number {data['number']} already exists"
+        return {"message": msg}, 400
 
     def put(self, number=None):
         args = data_valid_for('PUT')
@@ -63,26 +60,22 @@ class RoomsRes(Resource):
         if number:
             room = Rooms.query.get(number)
             if room:
-                if isinstance(args, dict):
-                    if args['number'] != number \
-                            and Rooms.query.get(args['number']):
-                        msg = f"number {args['number']} already exists"
-                        return {"message": msg}, 400
-                    else:
-                        # why it's not work?
-                        # room = Rooms(**args)
-                        room.number = args['number']
-                        room.level = args['level']
-                        room.status = args['status']
-                        room.price = args['price']
-                        # todo: what if tenant_id updated
-                        #  with value that not in db yet?
-                        room.tenant_id = args['tenant_id']
-                        db.session.commit()
-                        return {}, 204
+                if args['number'] != number \
+                        and Rooms.query.get(args['number']):
+                    msg = f"number {args['number']} already exists"
+                    return {"message": msg}, 400
                 else:
-                    return {"message": "not enough arguments to update",
-                            "missing args": args}, 400
+                    # why it's not work?
+                    # room = Rooms(**args)
+                    room.number = args['number']
+                    room.level = args['level']
+                    room.status = args['status']
+                    room.price = args['price']
+                    # todo: what if tenant_id updated
+                    #  with value that not in db yet?
+                    room.tenant_id = args['tenant_id']
+                    db.session.commit()
+                    return {}, 204
             else:
                 return {"message": "room not found"}, 404
         return {"message": "room number not specified"}, 400

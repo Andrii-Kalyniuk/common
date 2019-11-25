@@ -9,8 +9,6 @@ def data_valid_for(req):
         parser.add_argument('status', required=True)
         parser.add_argument('price', type=float, required=True)
         parser.add_argument('tenant_id')
-        data = parser.parse_args(strict=True)
-        return data
     elif req == 'GET':
         parser.add_argument('status')
     return parser.parse_args(strict=True)
