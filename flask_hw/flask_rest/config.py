@@ -1,5 +1,7 @@
 import os
 
+import logging
+
 
 class Config:
     DEBUG = False
@@ -13,11 +15,12 @@ class ProdConfig(Config):
     pass
 
 
-def run_config():
-    env = os.environ.get("ENV")
-    if env == "TEST":
-        return TestConfig
-    elif env == "PROD":
-        return ProdConfig
-    else:
-        return Config
+def get_config(env=None):
+    if not env:
+        env = os.environ.get("ENV")
+    logging.info(env)
+    config_options = {
+        "TEST": TestConfig,
+        "PROD": ProdConfig
+    }
+    return config_options.get(env, Config)

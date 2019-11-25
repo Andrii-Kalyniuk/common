@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 
-from config import run_config
+from config import get_config
 from db.db import DB, fillup_db
 from room import rooms_bp
 from staff import staff_bp
@@ -26,5 +26,5 @@ api = Api(app)
 api.add_resource(HealthCheck, '/_health_check')
 
 if __name__ == "__main__":
-    app.config.from_object(run_config())
+    app.config.from_object(get_config())
     app.run()
