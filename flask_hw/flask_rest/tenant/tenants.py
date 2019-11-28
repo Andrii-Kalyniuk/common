@@ -1,7 +1,6 @@
 import logging
 
-from flask import request
-from flask_restful import Resource, marshal_with
+from flask_restful import Resource, marshal_with, marshal
 
 from db.db import DB
 from models import Tenant
@@ -34,8 +33,7 @@ class TenantsRes(Resource):
                                   DB['tenants']))
             if tenants:
                 return tenants[0], header
-            else:
-                return {"message": "tenant not found"}, 404, header
+            return {"message": "tenant not found"}, 404, header
         else:
             if args['name']:
                 return list(filter(lambda r: args['name'] == r.name,
@@ -66,20 +64,19 @@ class TenantsRes(Resource):
                 if is_passport_id_exist(args, passport_id, DB['tenants']):
                     msg = f"passport_id {args['passport_id']} already exists"
                     return {"message": msg}, 400
-                else:
-                    tenants[0].name = args['name']
-                    tenants[0].passport_id = args['passport_id']
-                    tenants[0].age = args['age']
-                    tenants[0].sex = args['sex']
-                    tenants[0].address = args['address']
-                    tenants[0].room_number = args['room_number']
-                    return {}, 204
-            else:
-                return {"message": "tenant not found"}, 404
+                tenants[0].name = args['name']
+                tenants[0].passport_id = args['passport_id']
+                tenants[0].age = args['age']
+                tenants[0].sex = args['sex']
+                tenants[0].address = args['address']
+                tenants[0].room_number = args['room_number']
+                return {"message": "tenant was updated successfully",
+                        "tenant": marshal(tenants[0], tenant_structure)}, 200
+            return {"message": "tenant not found"}, 404
         return {"message": "tenant passport_id not specified"}, 404
 
     def patch(self, passport_id=None):
-        args = request.json
+        args = data_valid_for('PATCH')
         logging.debug(passport_id)
         logging.debug(args)
         if passport_id:
@@ -90,22 +87,21 @@ class TenantsRes(Resource):
                     if is_passport_id_exist(args, passport_id, DB['tenants']):
                         msg = f"passport_id {args['passport_id']} already exists"
                         return {"message": msg}, 400
-                    else:
-                        upd_here = DB['tenants'].index(tenants_to_update[0])
-                        updating_tenant = DB['tenants'][upd_here]
-                        updating_tenant.name = args.get('name',
-                                                        updating_tenant.name)
-                        updating_tenant.passport_id = args.get(
-                            'passport_id', updating_tenant.passport_id)
-                        updating_tenant.age = args.get('age',
-                                                       updating_tenant.age)
-                        updating_tenant.sex = args.get('sex',
-                                                       updating_tenant.sex)
-                        updating_tenant.address = args.get('address',
-                                                           updating_tenant.address)
-                        updating_tenant.room_number = args.get(
-                            'room_number', updating_tenant.room_number)
-                        return {"message": "tenant was updated"}
+                    upd_here = DB['tenants'].index(tenants_to_update[0])
+                    updating_tenant = DB['tenants'][upd_here]
+                    updating_tenant.name = args.get('name',
+                                                    updating_tenant.name)
+                    updating_tenant.passport_id = args.get(
+                        'passport_id', updating_tenant.passport_id)
+                    updating_tenant.age = args.get('age',
+                                                   updating_tenant.age)
+                    updating_tenant.sex = args.get('sex',
+                                                   updating_tenant.sex)
+                    updating_tenant.address = args.get('address',
+                                                       updating_tenant.address)
+                    updating_tenant.room_number = args.get(
+                        'room_number', updating_tenant.room_number)
+                    return {"message": "tenant was updated"}
                 return {"message": "nothing to update with"}
             return {"message": "tenant was not found"}, 404
         return {"message": "tenant number not specified"}, 400

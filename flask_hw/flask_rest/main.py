@@ -22,7 +22,7 @@ app.register_blueprint(rooms_bp)
 app.register_blueprint(tenants_bp)
 app.register_blueprint(staff_bp)
 
-api = Api(app)
+api = Api(app, catch_all_404s=True)
 api.add_resource(HealthCheck, '/_health_check')
 
 if __name__ == "__main__":

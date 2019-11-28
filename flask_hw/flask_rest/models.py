@@ -1,9 +1,8 @@
-
 class Room:
 
     def __init__(self, number, level, status, price):
         self.number = number
-        self.level = level
+        self.level = level  # floor
         self.status = status
         self.price = price
 

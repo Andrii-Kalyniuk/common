@@ -1,7 +1,6 @@
 import logging
 
-from flask import request
-from flask_restful import Resource, marshal_with
+from flask_restful import Resource, marshal_with, marshal
 
 from db.db import DB
 from models import Staff
@@ -34,8 +33,7 @@ class StaffRes(Resource):
                                 DB['staff']))
             if staff:
                 return staff[0], header
-            else:
-                return {"message": "staff not found"}, 404, header
+            return {"message": "staff not found"}, 404, header
         else:
             if args['name']:
                 return list(filter(lambda r: args['name'] == r.name,
@@ -66,18 +64,17 @@ class StaffRes(Resource):
                 if is_passport_id_exist(args, passport_id, DB['staff']):
                     msg = f"passport_id {args['passport_id']} already exists"
                     return {"message": msg}, 400
-                else:
-                    staff[0].name = args['name']
-                    staff[0].passport_id = args['passport_id']
-                    staff[0].position = args['position']
-                    staff[0].salary = args['salary']
-                    return {}, 204
-            else:
-                return {"message": "staff not found"}, 404
+                staff[0].name = args['name']
+                staff[0].passport_id = args['passport_id']
+                staff[0].position = args['position']
+                staff[0].salary = args['salary']
+                return {"message": "staff was updated successfully",
+                        "staff": marshal(staff[0], staff_structure)}, 200
+            return {"message": "staff not found"}, 404
         return {"message": "staff passport_id not specified"}, 404
 
     def patch(self, passport_id=None):
-        args = request.json
+        args = data_valid_for('PATCH')
         logging.debug(passport_id)
         logging.debug(args)
         if passport_id:
@@ -88,18 +85,17 @@ class StaffRes(Resource):
                     if is_passport_id_exist(args, passport_id, DB['staff']):
                         msg = f"passport_id {args['passport_id']} already exists"
                         return {"message": msg}, 400
-                    else:
-                        upd_here = DB['staff'].index(staff_to_update[0])
-                        updating_staff = DB['staff'][upd_here]
-                        updating_staff.name = args.get(
-                            'name', updating_staff.name)
-                        updating_staff.passport_id = args.get(
-                            'passport_id', updating_staff.passport_id)
-                        updating_staff.position = args.get(
-                            'position', updating_staff.position)
-                        updating_staff.salary = args.get(
-                            'salary', updating_staff.salary)
-                        return {"message": "staff was updated"}
+                    upd_here = DB['staff'].index(staff_to_update[0])
+                    updating_staff = DB['staff'][upd_here]
+                    updating_staff.name = args.get(
+                        'name', updating_staff.name)
+                    updating_staff.passport_id = args.get(
+                        'passport_id', updating_staff.passport_id)
+                    updating_staff.position = args.get(
+                        'position', updating_staff.position)
+                    updating_staff.salary = args.get(
+                        'salary', updating_staff.salary)
+                    return {"message": "staff was updated"}
                 return {"message": "nothing to update with"}
             return {"message": "staff was not found"}, 404
         return {"message": "staff number not specified"}, 400

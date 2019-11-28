@@ -1,6 +1,5 @@
 import logging
 
-from flask import request
 from flask_restful import Resource
 
 from db.db import DB
@@ -31,8 +30,7 @@ class RoomsRes(Resource):
             rooms = list(filter(lambda r: number == r.number, DB['rooms']))
             if rooms:
                 return rooms[0].serialize(), header
-            else:
-                return {"message": "room not found"}, 404, header
+            return {"message": "room not found"}, 404, header
         else:
             if args['status']:
                 return list(filter(lambda r: args['status'] == r['status'],
@@ -63,18 +61,17 @@ class RoomsRes(Resource):
                 if is_number_exist(args, number, DB['rooms']):
                     msg = f"number {args['number']} already exists"
                     return {"message": msg}, 400
-                else:
-                    room[0].number = args['number']
-                    room[0].level = args['level']
-                    room[0].status = args['status']
-                    room[0].price = args['price']
-                    return {}, 204
-            else:
-                return {"message": "room not found"}, 404
+                room[0].number = args['number']
+                room[0].level = args['level']
+                room[0].status = args['status']
+                room[0].price = args['price']
+                return {"message": "room was updated successfully",
+                        "room": room[0].serialize()}, 200
+            return {"message": "room not found"}, 404
         return {"message": "room number not specified"}, 404
 
     def patch(self, number=None):
-        args = request.json
+        args = data_valid_for('PATCH')
         logging.debug(number)
         logging.debug(args)
         if number:
@@ -85,18 +82,17 @@ class RoomsRes(Resource):
                     if is_number_exist(args, number, DB['rooms']):
                         msg = f"number {args['number']} already exists"
                         return {"message": msg}, 400
-                    else:
-                        upd_here = DB['rooms'].index(room_to_update[0])
-                        updating_room = DB['rooms'][upd_here]
-                        updating_room.number = args.get('number',
-                                                        updating_room.number)
-                        updating_room.level = args.get('level',
-                                                       updating_room.level)
-                        updating_room.status = args.get('status',
-                                                        updating_room.status)
-                        updating_room.price = args.get('price',
-                                                       updating_room.price)
-                        return {"message": "room was updated"}
+                    upd_here = DB['rooms'].index(room_to_update[0])
+                    updating_room = DB['rooms'][upd_here]
+                    updating_room.number = args.get('number',
+                                                    updating_room.number)
+                    updating_room.level = args.get('level',
+                                                   updating_room.level)
+                    updating_room.status = args.get('status',
+                                                    updating_room.status)
+                    updating_room.price = args.get('price',
+                                                   updating_room.price)
+                    return {"message": "room was updated"}
                 return {"message": "nothing to update with"}
             return {"message": "room was not found"}, 404
         return {"message": "room number not specified"}, 400

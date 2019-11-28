@@ -4,10 +4,10 @@ DB = {}
 
 
 def fillup_db():
-    DB['rooms'].append(Room(42, 'Lux', 'closed', 1000))
-    DB['rooms'].append(Room(7, 'Classic', 'available', 50))
-    DB['rooms'].append(Room(69, 'VIP', 'available', 9000))
-    DB['rooms'].append(Room(11, 'Loft', 'closed', 10))
+    DB['rooms'].append(Room(42, 1, 'closed', 1000))
+    DB['rooms'].append(Room(7, 1, 'available', 50))
+    DB['rooms'].append(Room(69, 7, 'available', 9000))
+    DB['rooms'].append(Room(11, 3, 'closed', 10))
 
     DB['tenants'].append(Tenant('Neo', 'zz0101', 33, 'M',
                                 {
