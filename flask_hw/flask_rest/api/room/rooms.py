@@ -1,7 +1,7 @@
 import logging
 
 from flask import request
-from flask_restful import Resource, marshal_with
+from flask_restful import Resource, marshal_with, marshal
 
 from api.room.room_parsers import data_valid_for
 from api.room.structure import room_structure
@@ -75,13 +75,14 @@ class RoomsRes(Resource):
                     #  with value that not in db yet?
                     room.tenant_id = args['tenant_id']
                     db.session.commit()
-                    return {}, 204
+                    return {"message": "room was updated successfully",
+                            "room": marshal(room, room_structure)}, 200
             else:
                 return {"message": "room not found"}, 404
         return {"message": "room number not specified"}, 400
 
     def patch(self, number=None):
-        data = request.json
+        data = data_valid_for('PATCH')
         logging.debug(number)
         logging.debug(data)
         if number:
