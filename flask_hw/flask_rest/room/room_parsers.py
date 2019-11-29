@@ -33,4 +33,6 @@ def data_valid_for(req):
         parser.add_argument('price', type=positive_number, required=required)
     elif req == 'GET':
         parser.add_argument('status')
-    return parser.parse_args(strict=True)
+        return parser.parse_args(strict=True)
+    data = parser.parse_args(strict=True)
+    return {key: data[key] for key in data if data[key]}
