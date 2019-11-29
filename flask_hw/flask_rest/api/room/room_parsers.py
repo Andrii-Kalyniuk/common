@@ -12,7 +12,8 @@ def positive_number(some_value, name):
         try:
             some_value = float(some_value)
         except ValueError:
-            msg = f"The parameter {name} must be float"
+            msg = f"The parameter {name} must be float" \
+                  f" Your value is: '{some_value}'"
             raise ValueError(msg)
     if some_value < 0:
         msg = f"The parameter '{name}' must be positive." \
@@ -34,4 +35,5 @@ def data_valid_for(req):
         parser.add_argument('tenant_id')
     elif req == 'GET':
         parser.add_argument('status')
-    return parser.parse_args(strict=True)
+    data = parser.parse_args(strict=True)
+    return {key: data[key] for key in data if data[key]}

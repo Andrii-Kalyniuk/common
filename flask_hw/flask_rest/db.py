@@ -16,7 +16,7 @@ staff_rooms = db.Table(
 
 class Rooms(db.Model):
     number = db.Column(db.Integer, unique=True, primary_key=True)
-    level = db.Column(db.String(80))
+    level = db.Column(db.Integer)
     status = db.Column(db.String(80), nullable=False)
     price = db.Column(db.Float, nullable=False)
     tenant_id = db.Column(db.String, db.ForeignKey('tenants.passport_id'))
@@ -46,13 +46,13 @@ def fill_up_db():
     db.session.commit()
     logging.info('---Previous database has been DELETED---')
     db.create_all()
-    room_0 = Rooms(number=42, level='Lux', status='closed', price=1000,
+    room_0 = Rooms(number=42, level=3, status='closed', price=1000,
                    tenant_id='cc3333')
-    room_1 = Rooms(number=7, level='Classic', status='available',
+    room_1 = Rooms(number=7, level=1, status='available',
                    price=59.99, tenant_id='cc3333')
-    room_2 = Rooms(number=69, level='VIP', status='available',
+    room_2 = Rooms(number=69, level=7, status='available',
                    price=9000, tenant_id='zz0101')
-    room_3 = Rooms(number=11, level='Loft', status='closed', price=10,
+    room_3 = Rooms(number=11, level=1, status='closed', price=10,
                    tenant_id='zz0101')
     staff_0 = Staff(passport_id='aa1111', name='Taylor',
                     position='waiter', salary=100.0)

@@ -1,7 +1,6 @@
 import logging
 
-from flask import request
-from flask_restful import marshal_with, Resource
+from flask_restful import marshal_with, Resource, marshal
 
 from api.staff.staff_parsers import data_valid_for, data_valid_for_staff_room
 from api.staff.structure import staff_structure
@@ -75,7 +74,8 @@ class StaffRes(Resource):
                         staff.position = args['position']
                         staff.salary = args['salary']
                         db.session.commit()
-                        return {}, 204
+                        return {"message": "staff was updated successfully",
+                                "staff": marshal(staff, staff_structure)}, 200
                 else:
                     return {"message": "not enough arguments to update",
                             "missing args": args}, 400
@@ -84,7 +84,7 @@ class StaffRes(Resource):
         return {"message": "staff passport_id not specified"}, 400
 
     def patch(self, passport_id=None):
-        data = request.json
+        data = data_valid_for('PATCH')
         logging.debug(passport_id)
         logging.debug(data)
         if passport_id:
@@ -132,6 +132,8 @@ class StaffRooms(Resource):
         data = data_valid_for_staff_room('POST')
         staff_name = data.get('staff_name')
         room_number = data.get('room_number')
+        logging.debug(staff_name)
+        logging.debug(room_number)
         staff = Staff.query.filter_by(name=staff_name).first()
         room = Rooms.query.filter_by(number=room_number).first()
         logging.debug(staff.passport_id)

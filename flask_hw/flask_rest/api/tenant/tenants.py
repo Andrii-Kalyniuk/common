@@ -1,8 +1,6 @@
 import logging
 
-from flask import request
-from flask_restful import Resource, marshal_with
-
+from flask_restful import Resource, marshal_with, marshal
 
 from api.tenant.structure import tenant_structure
 from api.tenant.tenant_parsers import data_valid_for
@@ -81,7 +79,9 @@ class TenantsRes(Resource):
                         tenant.city = args['city']
                         tenant.address = args['address']
                         db.session.commit()
-                        return {}, 204
+                        return {"message": "tenant was updated successfully",
+                                "tenant": marshal(tenant, tenant_structure)},\
+                               200
                 else:
                     return {"message": "not enough arguments to update",
                             "missing args": args}, 400
@@ -90,7 +90,7 @@ class TenantsRes(Resource):
         return {"message": "tenant passport_id not specified"}, 400
 
     def patch(self, passport_id=None):
-        data = request.json
+        data = data_valid_for('PATCH')
         logging.debug(passport_id)
         logging.debug(data)
         if passport_id:

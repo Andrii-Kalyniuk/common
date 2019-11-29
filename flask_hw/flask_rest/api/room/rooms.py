@@ -1,6 +1,5 @@
 import logging
 
-from flask import request
 from flask_restful import Resource, marshal_with, marshal
 
 from api.room.room_parsers import data_valid_for
