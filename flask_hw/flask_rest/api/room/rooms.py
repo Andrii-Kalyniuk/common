@@ -1,6 +1,7 @@
 import logging
 
 from flask_restful import Resource, marshal_with, marshal
+from sqlalchemy.exc import SQLAlchemyError
 
 from api.room.room_parsers import data_valid_for
 from api.room.structure import room_structure
@@ -33,8 +34,11 @@ class RoomsRes(Resource):
         else:
             if args['status']:
                 rooms = Rooms.query.filter_by(status=args['status']).all()
+                # todo: add if status not found (or empty list is OK?)
+                if not rooms:
+                    msg = f"rooms with status='{args['status']}' not found"
+                    return {"message": msg}, 404, header
                 return rooms, header
-            # todo: add if status not found?
         return room_all, header
 
     def post(self):
@@ -43,11 +47,17 @@ class RoomsRes(Resource):
         if not Rooms.query.get(data['number']):
             new_room = Rooms(**data)
             db.session.add(new_room)
-            db.session.commit()
+            # FIXME: what if room was not saved?
+            try:
+                db.session.commit()
+            except SQLAlchemyError:
+                return {"message": "error saving to database, try later"}
             location = {
                 "Location": f'/api/v0.1/rooms/{str(new_room.number)}'
             }
-            return {"message": "room was added successfully"}, \
+            # FIXME: return room data instead of message
+            return {"message": "room was added successfully",
+                    "room": marshal(new_room, room_structure)}, \
                    201, location
         msg = f"number {data['number']} already exists"
         return {"message": msg}, 400
@@ -64,18 +74,19 @@ class RoomsRes(Resource):
                     msg = f"number {args['number']} already exists"
                     return {"message": msg}, 400
                 else:
-                    # why it's not work?
-                    # room = Rooms(**args)
                     room.number = args['number']
                     room.level = args['level']
                     room.status = args['status']
                     room.price = args['price']
-                    # todo: what if tenant_id updated
-                    #  with value that not in db yet?
                     room.tenant_id = args['tenant_id']
-                    db.session.commit()
+                    # FIXME: what if room was not saved?
+                    try:
+                        db.session.commit()
+                    except SQLAlchemyError:
+                        return {"message": "error saving to database,"
+                                           " try later"}
                     return {"message": "room was updated successfully",
-                            "room": marshal(room, room_structure)}, 200
+                            "room": marshal(room, room_structure)}
             else:
                 return {"message": "room not found"}, 404
         return {"message": "room number not specified"}, 400
@@ -100,8 +111,14 @@ class RoomsRes(Resource):
                         # todo: what if tenant_id updated
                         #  with value that not in db yet?
                         room.tenant_id = data.get('tenant_id', room.tenant_id)
-                        db.session.commit()
-                    return {"message": "room was updated"}
+                        # FIXME: what if room was not saved?
+                        try:
+                            db.session.commit()
+                        except SQLAlchemyError:
+                            return {"message": "error saving to database,"
+                                               " try later"}
+                    return {"message": "room was updated successfully",
+                            "room": marshal(room, room_structure)}
                 else:
                     return {"message": "nothing to update with"}, 400
             return {"message": "room was not found"}, 404
@@ -112,7 +129,12 @@ class RoomsRes(Resource):
             room = Rooms.query.get(number)
             if room:
                 db.session.delete(room)
-                db.session.commit()
+                # FIXME: what if room was not deleted?
+                try:
+                    db.session.commit()
+                except SQLAlchemyError:
+                    return {"message": "error saving to database,"
+                                       " try later"}
                 return {"message": "room was deleted"}, 204
             return {"message": "room was not found"}, 404
         return {"message": "room number not specified"}, 400
