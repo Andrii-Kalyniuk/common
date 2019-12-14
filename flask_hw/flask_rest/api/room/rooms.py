@@ -28,7 +28,7 @@ class RoomsRes(Resource):
             if room:
                 return room, header
             else:
-                # todo: how to display message instead of Rooms
+                # FIXME: how to display message instead of Rooms
                 #  structure with nulls?
                 return {"message": "room not found"}, 404, header
         else:
@@ -51,7 +51,7 @@ class RoomsRes(Resource):
             try:
                 db.session.commit()
             except SQLAlchemyError:
-                return {"message": "error saving to database, try later"}
+                return {"message": "could not save to database, try later"}
             location = {
                 "Location": f'/api/v0.1/rooms/{str(new_room.number)}'
             }
@@ -83,7 +83,7 @@ class RoomsRes(Resource):
                     try:
                         db.session.commit()
                     except SQLAlchemyError:
-                        return {"message": "error saving to database,"
+                        return {"message": "could not save to database,"
                                            " try later"}
                     return {"message": "room was updated successfully",
                             "room": marshal(room, room_structure)}
@@ -115,7 +115,7 @@ class RoomsRes(Resource):
                         try:
                             db.session.commit()
                         except SQLAlchemyError:
-                            return {"message": "error saving to database,"
+                            return {"message": "could not save to database,"
                                                " try later"}
                     return {"message": "room was updated successfully",
                             "room": marshal(room, room_structure)}
@@ -133,7 +133,7 @@ class RoomsRes(Resource):
                 try:
                     db.session.commit()
                 except SQLAlchemyError:
-                    return {"message": "error saving to database,"
+                    return {"message": "could not save changes to database,"
                                        " try later"}
                 return {"message": "room was deleted"}, 204
             return {"message": "room was not found"}, 404

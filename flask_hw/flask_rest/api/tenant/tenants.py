@@ -1,6 +1,7 @@
 import logging
 
 from flask_restful import Resource, marshal_with, marshal
+from sqlalchemy.exc import SQLAlchemyError
 
 from api.tenant.structure import tenant_structure
 from api.tenant.tenant_parsers import data_valid_for
@@ -36,7 +37,8 @@ class TenantsRes(Resource):
                 if tenants:
                     return tenants, header
                 # todo:add if name not found without nulls?
-                return {"message": "tenant not found"}, 404, header
+                msg = f"rooms with status='{args['status']}' not found"
+                return {"message": msg}, 404, header
         return tenants_all, header
 
     def post(self):
@@ -46,12 +48,18 @@ class TenantsRes(Resource):
             if not Tenants.query.get(data['passport_id']):
                 new_tenant = Tenants(**data)
                 db.session.add(new_tenant)
-                db.session.commit()
+                # FIXME: what if tenant was not saved?
+                try:
+                    db.session.commit()
+                except SQLAlchemyError:
+                    return {"message": "could not save to database, try later"}
                 location = {
                     "Location":
                         f'/api/v0.1/tenants/{str(new_tenant.passport_id)}'
                 }
-                return {"message": "tenant was added successfully"}, \
+                # FIXME: return tenant data instead of message
+                return {"message": "tenant was added successfully",
+                        "room": marshal(new_tenant, tenant_structure)}, \
                        201, location
             msg = f"passport_id {data['passport_id']} already exists"
             return {"message": msg}, 400
@@ -78,7 +86,12 @@ class TenantsRes(Resource):
                         tenant.sex = args['sex']
                         tenant.city = args['city']
                         tenant.address = args['address']
-                        db.session.commit()
+                        # FIXME: what if tenant was not saved?
+                        try:
+                            db.session.commit()
+                        except SQLAlchemyError:
+                            return {"message": "could not save to database,"
+                                               " try later"}
                         return {"message": "tenant was updated successfully",
                                 "tenant": marshal(tenant, tenant_structure)},\
                                200
@@ -110,8 +123,14 @@ class TenantsRes(Resource):
                         tenant.sex = data.get('sex', tenant.sex)
                         tenant.city = data.get('city', tenant.city)
                         tenant.address = data.get('address', tenant.address)
-                        db.session.commit()
-                    return {"message": "tenant was updated"}
+                        # FIXME: what if tenant was not saved?
+                        try:
+                            db.session.commit()
+                        except SQLAlchemyError:
+                            return {"message": "could not save to database,"
+                                               " try later"}
+                    return {"message": "tenant was updated successfully",
+                            "tenant": marshal(tenant, tenant_structure)}
                 else:
                     return {"message": "nothing to update with"}, 400
             return {"message": "tenant was not found"}, 404
@@ -122,7 +141,12 @@ class TenantsRes(Resource):
             tenant = Tenants.query.get(passport_id)
             if tenant:
                 db.session.delete(tenant)
-                db.session.commit()
+                # FIXME: what if tenant was not deleted?
+                try:
+                    db.session.commit()
+                except SQLAlchemyError:
+                    return {"message": "could not save to database,"
+                                       " try later"}
                 return {"message": "tenant was deleted"}, 204
             return {"message": "tenant was not found"}, 404
         return {"message": "tenant passport_id not specified"}, 400

@@ -1,6 +1,7 @@
 import logging
 
 from flask_restful import marshal_with, Resource, marshal
+from sqlalchemy.exc import SQLAlchemyError
 
 from api.staff.staff_parsers import data_valid_for, data_valid_for_staff_room
 from api.staff.structure import staff_structure
@@ -27,13 +28,17 @@ class StaffRes(Resource):
             if staff:
                 return staff, header
             else:
-                # how to display message instead of Staff structure here?
+                # FIXME: how to display message instead of Staff
+                #  structure with nulls?
                 return {"message": "staff not found"}, 404, header
         else:
             if args['name']:
                 staff = Staff.query.filter_by(name=args['name']).all()
+                # todo: add if name not found (or empty list is OK?)
+                if not staff:
+                    msg = f"tenant with name='{args['name']}' not found"
+                    return {"message": msg}, 404, header
                 return staff, header
-            # add if name not found?
         return staff_all, header
 
     def post(self):
@@ -43,12 +48,18 @@ class StaffRes(Resource):
             if not Staff.query.get(data['passport_id']):
                 new_staff = Staff(**data)
                 db.session.add(new_staff)
-                db.session.commit()
+                # FIXME: what if sfaff was not saved?
+                try:
+                    db.session.commit()
+                except SQLAlchemyError:
+                    return {"message": "could not save to database, try later"}
                 location = {
                     "Location":
                         f'/api/v0.1/staff/{str(new_staff.passport_id)}'
                 }
-                return {"message": "staff was added successfully"}, \
+                # FIXME: return staff data instead of message
+                return {"message": "room was added successfully",
+                        "staff": marshal(new_staff, staff_structure)}, \
                        201, location
             msg = f"passport_id {data['passport_id']} already exists"
             return {"message": msg}, 400
@@ -73,7 +84,12 @@ class StaffRes(Resource):
                         staff.name = args['name']
                         staff.position = args['position']
                         staff.salary = args['salary']
-                        db.session.commit()
+                        # FIXME: what if staff was not saved?
+                        try:
+                            db.session.commit()
+                        except SQLAlchemyError:
+                            return {"message": "could not save to database,"
+                                               " try later"}
                         return {"message": "staff was updated successfully",
                                 "staff": marshal(staff, staff_structure)}, 200
                 else:
@@ -102,8 +118,14 @@ class StaffRes(Resource):
                         staff.name = data.get('name', staff.name)
                         staff.position = data.get('position', staff.position)
                         staff.salary = data.get('salary', staff.salary)
-                        db.session.commit()
-                    return {"message": "staff was updated"}
+                        # FIXME: what if staff was not saved?
+                        try:
+                            db.session.commit()
+                        except SQLAlchemyError:
+                            return {"message": "could not save to database,"
+                                               " try later"}
+                    return {"message": "staff was updated successfully",
+                            "staff": marshal(staff, staff_structure)}
                 else:
                     return {"message": "nothing to update with"}, 400
             return {"message": "staff was not found"}, 404
@@ -114,7 +136,12 @@ class StaffRes(Resource):
             staff = Staff.query.get(passport_id)
             if staff:
                 db.session.delete(staff)
-                db.session.commit()
+                # FIXME: what if staff was not deleted?
+                try:
+                    db.session.commit()
+                except SQLAlchemyError:
+                    return {"message": "could not save changes to database,"
+                                       " try later"}
                 return {"message": "staff was deleted"}, 204
             return {"message": "staff was not found"}, 404
         return {"message": "staff passport_id not specified"}, 400
@@ -138,7 +165,12 @@ class StaffRooms(Resource):
         room = Rooms.query.filter_by(number=room_number).first()
         logging.debug(staff.passport_id)
         room.serve_by.append(staff)
-        db.session.commit()
+        # FIXME: what if staff_rooms was not saved?
+        try:
+            db.session.commit()
+        except SQLAlchemyError:
+            return {"message": "could not save changes to database,"
+                               " try later"}
         logging.debug(room.serve_by)
         msg_content = f'{staff_name} added to the room #{room_number} service'
         return {"message": msg_content}, 201
@@ -150,7 +182,12 @@ class StaffRooms(Resource):
         staff = Staff.query.filter_by(name=staff_name).first()
         room = Rooms.query.filter_by(number=room_number).first()
         room.serve_by.remove(staff)
-        db.session.commit()
+        # FIXME: what if staff_rooms was not deleted?
+        try:
+            db.session.commit()
+        except SQLAlchemyError:
+            return {"message": "could not save changes to database,"
+                               " try later"}
         msg_content = f'{staff_name} removed from' \
                       f' the room #{room_number} service'
         return {"message": msg_content}, 200
