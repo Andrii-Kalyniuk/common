@@ -25,20 +25,15 @@ class TenantsRes(Resource):
         logging.debug(passport_id)
         logging.debug(args)
         if passport_id:
-            tenant = Tenants.query.get(passport_id)
+            tenant = Tenants.query.get_or_404(passport_id,
+                                              description="tenant not found")
             if tenant:
                 return tenant, header
-            else:
-                # how to display message instead of Tenants structure here?
-                return {"message": "tenant not found"}, 404, header
         else:
             if args['name']:
                 tenants = Tenants.query.filter_by(name=args['name']).all()
-                if tenants:
-                    return tenants, header
-                # todo:add if name not found without nulls?
-                msg = f"rooms with status='{args['status']}' not found"
-                return {"message": msg}, 404, header
+                # FIXME: if name not found just return empty list
+                return tenants, header
         return tenants_all, header
 
     def post(self):
@@ -93,7 +88,7 @@ class TenantsRes(Resource):
                             return {"message": "could not save to database,"
                                                " try later"}
                         return {"message": "tenant was updated successfully",
-                                "tenant": marshal(tenant, tenant_structure)},\
+                                "tenant": marshal(tenant, tenant_structure)}, \
                                200
                 else:
                     return {"message": "not enough arguments to update",

@@ -24,20 +24,14 @@ class StaffRes(Resource):
         logging.debug(passport_id)
         logging.debug(args)
         if passport_id:
-            staff = Staff.query.get(passport_id)
+            staff = Staff.query.get_or_404(passport_id,
+                                           description="staff not found")
             if staff:
                 return staff, header
-            else:
-                # FIXME: how to display message instead of Staff
-                #  structure with nulls?
-                return {"message": "staff not found"}, 404, header
         else:
             if args['name']:
                 staff = Staff.query.filter_by(name=args['name']).all()
-                # todo: add if name not found (or empty list is OK?)
-                if not staff:
-                    msg = f"tenant with name='{args['name']}' not found"
-                    return {"message": msg}, 404, header
+                # FIXME: if name not found just return empty list
                 return staff, header
         return staff_all, header
 
