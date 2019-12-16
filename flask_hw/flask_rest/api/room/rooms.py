@@ -24,20 +24,14 @@ class RoomsRes(Resource):
         logging.debug(number)
         logging.debug(args)
         if number:
-            room = Rooms.query.get(number)
+            # FIXME: to display message instead of Rooms structure with nulls?
+            room = Rooms.query.get_or_404(number, description="room not found")
             if room:
                 return room, header
-            else:
-                # FIXME: how to display message instead of Rooms
-                #  structure with nulls?
-                return {"message": "room not found"}, 404, header
         else:
             if args['status']:
                 rooms = Rooms.query.filter_by(status=args['status']).all()
-                # todo: add if status not found (or empty list is OK?)
-                if not rooms:
-                    msg = f"rooms with status='{args['status']}' not found"
-                    return {"message": msg}, 404, header
+                # FIXME: if status not found just return empty list
                 return rooms, header
         return room_all, header
 
