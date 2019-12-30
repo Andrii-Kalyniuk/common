@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Home {% endblock %}
+
+{% block content_title %}
+<u> Home </u>
+<h2 class="text_center"><a href="{{ url_for('products.get_all_products') }}">Products</a></h2>
+<h2 class="text_center"><a href="{{ url_for('supermarkets.get_all_supermarkets') }}">Supermarkets</a></h2>
+{% endblock %}
+
+{% block content %}
+<p class="text_center">
+    First you need to fill the database by adding some products and supermarkets data<br>
+    You can:<br>
+    Add product/supermarkets.<br>
+    Get all products/supermarkets.<br>
+    Filter products by price.<br>
+    Filter markets by location.<br>
+    Get particular product/supermarket by id.</p>
+{% endblock %}

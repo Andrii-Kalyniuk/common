@@ -1,0 +1,39 @@
+{
+  "products": [
+    {
+      "name": "Postcard \"Got ham\"",
+      "price": "10.0",
+      "description": "Batman in a shop",
+      "img_name": "some_stuff_0.jpg"
+    },
+    {
+      "name": "Postcard \"Stuff happens\"",
+      "price": "5",
+      "description": "Stuff happens with mr.Poopy",
+      "img_name": "some_stuff_2.jpg"
+    },
+    {
+      "name": "Postcard without image",
+      "price": "0.01",
+      "description": "Need to add image",
+      "img_name": "no_image.jpg"
+    }
+  ],
+  "supermarkets": [
+    {
+      "name": "ATB #46",
+      "location": "Dnipro",
+      "img_name": "market_0.jpg"
+    },
+    {
+      "name": "Silpo #50",
+      "location": "Kyiv",
+      "img_name": "market_1.jpg"
+    },
+    {
+      "name": "Varus",
+      "location": "Kyiv",
+      "img_name": "market_2.png"
+    }
+  ]
+}
