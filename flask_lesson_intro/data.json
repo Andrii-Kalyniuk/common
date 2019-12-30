@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Alarm clock",
+    "text": "An alarm clock is a clock that is designed to alert an individual or group of individuals at a specified time. The primary function of these clocks is to awaken people from their night's sleep or short naps; they are sometimes used for other reminders as well. Most use sound; some use light or vibration. Some have sensors to identify when a person is in a light stage of sleep, in order to avoid waking someone who is deeply asleep, which causes tiredness, even if the person has had adequate sleep. To stop the sound or light, a button or handle on the clock is pressed; most clocks automatically stop the alarm if left unattended long enough. A classic analog alarm clock has an extra hand or inset dial that is used to specify the time at which to activate the alarm. Alarm clocks are also found on mobile phones, watches, and computers."
+  },
+  {
+    "title": "Headphones",
+    "text": "Headphones (or head-phones in the early days of telephony and radio) traditionally refer to a pair of small loudspeaker drivers worn on or around the head over a user's ears. They are electroacoustic transducers, which convert an electrical signal to a corresponding sound. Headphones let a single user listen to an audio source privately, in contrast to a loudspeaker, which emits sound into the open air for anyone nearby to hear. Headphones are also known as earspeakers, earphones[1] or, colloquially, cans.[2] Circumaural ('around the ear') and supra-aural ('over the ear') headphones use a band over the top of the head to hold the speakers in place. Another type, known as earbuds or earpieces[1] consist of individual units that plug into the user's ear canal. A third type are bone conduction headphones, which typically wrap around the back of the head and rest in front of the ear canal, leaving the ear canal open."
+  },
+  {
+    "title": "iPod",
+    "text": "The iPod is a line of portable media players and multi-purpose pocket computers[2] designed and marketed by Apple Inc. The first version was released on October 23, 2001, about ​8 1⁄2 months after the Macintosh version of iTunes was released. As of May 28, 2019, only the iPod Touch (7th generation) remains in production.Like other digital music players, some versions of the iPod can serve as external data storage devices. Prior to macOS 10.15 Apple's iTunes software (and other alternative software) can be used to transfer music, photos, videos, games, contact information, e-mail settings, Web bookmarks, and calendars, to the devices supporting these features from computers using certain versions of Apple macOS and Microsoft Windows operating systems.[4][5]"
+  },
+  {
+    "title": "Calculator",
+    "text": "An electronic calculator is typically a portable electronic device used to perform calculations, ranging from basic arithmetic to complex mathematics.The first solid-state electronic calculator was created in the early 1960s. Pocket-sized devices became available in the 1970s, especially after the Intel 4004, the first microprocessor, was developed by Intel for the Japanese calculator company Busicom. They later became used commonly within the petroleum industry (oil and gas).Modern electronic calculators vary from cheap, give-away, credit-card-sized models to sturdy desktop models with built-in printers. They became popular in the mid-1970s as the incorporation of integrated circuits reduced their size and cost. By the end of that decade, prices had dropped to the point where a basic calculator was affordable to most and they became common in schools."
+  },
+  {
+    "title": "Coffeemaker",
+    "text": "Coffeemakers or coffee machines are cooking appliances used to brew coffee. While there are many different types of coffeemakers using a number of different brewing principles, in the most common devices, coffee grounds are placed in a paper or metal filter inside a funnel, which is set over a glass or ceramic coffee pot, a cooking pot in the kettle family. Cold water is poured into a separate chamber, which is then heated up to the boiling point, and directed into the funnel. This is also called automatic drip-brew."
+  },
+  {
+    "title": "Battery charger",
+    "text": "The charging protocol (how much voltage or current for how long, and what to do when charging is complete, for instance) depends on the size and type of the battery being charged. Some battery types have high tolerance for overcharging (i.e., continued charging after the battery has been fully charged) and can be recharged by connection to a constant voltage source or a constant current source, depending on battery type. Simple chargers of this type must be manually disconnected at the end of the charge cycle, and some battery types absolutely require, or may use a timer, to cut off charging current at some fixed time, approximately when charging is complete. Other battery types cannot withstand over-charging, being damaged (reduced capacity, reduced lifetime), over heating or even exploding. The charger may have temperature or voltage sensing circuits and a microprocessor controller to safely adjust the charging current and voltage, determine the state of charge, and cut off at the end of charge."
+  }
+]

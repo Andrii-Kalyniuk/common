@@ -1,0 +1,13 @@
+{%extends 'base.html'%}
+{% block vegan_menu %}
+<h2>Vegetables:</h2>
+<ul>
+    {% for veget in vegan_list %}
+    {% if veget == 'beetroot' %}
+        <li>{{veget|upper()}}</li>
+    {% else %}
+        <li>{{veget}}</li>
+    {%endif%}
+    {% endfor %}
+</ul>
+{% endblock %}

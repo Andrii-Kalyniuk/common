@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block element_from_img %}
+
+<img class="img_center" src="{{ url_for('static', filename=item_from_img + '.jpg') }}">
+{% set description = (data|selectattr('title', 'eq', item_from_img)|list)[0]['text'] %}
+<p></p>
+<p class="description"><b>Description:</b> <br>{{ description }}</p>
+<p><b>Count of words in the description:</b> {{ description|wordcount }}</p>
+
+{% endblock %}

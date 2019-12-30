@@ -1,0 +1,13 @@
+.img_center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width:240px;
+  height:186px;
+  border:0;
+}
+
+.text_center {
+  text-align:center;
+  font-size:300%;
+}

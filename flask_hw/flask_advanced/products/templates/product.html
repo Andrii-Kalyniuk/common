@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Product info {% endblock %}
+
+{% block content_title %}
+<u>Product info</u>
+
+{% endblock %}
+
+{% block content %}
+    <h1>{{ product.name }}</h1>
+    <p><b>Price</b>: {{ product.price }}</p>
+    <p><b>ID</b>: {{ product.id }}</p>
+    <p><b>Description</b>: {{ product.description }}</p>
+    <p><b>Image</b>: {{ product.img_name }}</p>
+    {% if not product.img_name %}
+    <img class="img_center" alt="No image yet" src="{{ url_for('products.static', filename='no_image.jpg') }}">
+    {% else %}
+    <img class="img_center" alt="{{ product.img_name }}" src="{{ url_for('products.static', filename=product.img_name) }}">
+    {% endif %}
+
+    <a href="{{ url_for('products.get_all_products') }}"><< back to Products</a>
+{% endblock %}

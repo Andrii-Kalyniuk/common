@@ -1,0 +1,13 @@
+{%extends 'base.html'%}
+{% block vegan_menu %}
+<h2>Fruits:</h2>
+<ul>
+    {% for fruit in vegan_list %}
+    {% if fruit == 'strawberry' %}
+        <li style="color:red">{{fruit}}</li>
+    {% else %}
+        <li>{{fruit}}</li>
+    {%endif%}
+    {% endfor %}
+</ul>
+{% endblock %}
