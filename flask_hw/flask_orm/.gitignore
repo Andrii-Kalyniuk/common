@@ -3,6 +3,3 @@
 __pycache__/
 
 .pyc
-venv/
-flask_empty/
-
