@@ -1,0 +1,6 @@
+.idea
+.gitignore
+db.sqlite3
+Dockerfile
+venv
+venv_django
