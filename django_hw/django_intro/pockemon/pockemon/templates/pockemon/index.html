@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home|Pockemon</title>
-</head>
-<body>
-<h2><a href="{% url 'question' %}">{{ link_text }}</a></h2>
-</body>
-</html>
+{% extends "pockemon/base.html" %}
+
+{% block title %} {{ title }}{% endblock %}
+
+{% block content %}
+
+<h4><a href="{% url 'take_all_names' %}">{{ link_text }}</a></h4>
+
+{% endblock %}
