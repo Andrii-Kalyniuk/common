@@ -1,8 +1,11 @@
 import requests
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
+from .settings import POCKEMON_URL
 
-POCKEMON_URL = 'https://pokeapi.co/api/v2/'
+
+def get_pokemons():
+    return requests.get(f'{POCKEMON_URL}/type/3').json()
 
 
 def index(request):
@@ -10,14 +13,10 @@ def index(request):
     return HttpResponse(render(request, 'pockemon/index.html', context))
 
 
-def take_all_names(request):
-    response = requests.get(f'{POCKEMON_URL}/type/3').json()
-    pokemons_names = [p['pokemon']['name'] for p in response['pokemon']]
-    return HttpResponse(render(request, 'pockemon/pokemons.html',
-                               {
-                                   "title": "Names",
-                                   "pokemons_names": pokemons_names
-                               }))
+def show_all_names(request):
+    pokemons_names = [p['pokemon']['name'] for p in get_pokemons()['pokemon']]
+    context = {"title": "Names", "pokemons_names": pokemons_names}
+    return HttpResponse(render(request, 'pockemon/pokemons.html', context))
 
 
 def status(request):

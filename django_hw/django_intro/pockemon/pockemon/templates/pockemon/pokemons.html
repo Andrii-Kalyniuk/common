@@ -6,10 +6,10 @@
 
 <h4><a href="{% url 'index' %}"> Back to Home</a></h4>
 <p>Pockemon's names:</p>
-<ul>
+<ol>
     {% for name in pokemons_names %}
     <li>{{ name }}</li>
     {% endfor %}
-</ul>
+</ol>
 <h4><a href="{% url 'index' %}"> Back to Home</a></h4>
 {% endblock %}
