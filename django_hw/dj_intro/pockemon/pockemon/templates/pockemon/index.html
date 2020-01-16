@@ -1,0 +1,9 @@
+{% extends "pockemon/base.html" %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+<h4><a href="{% url 'show_all_names' %}">{{ link_text }}</a></h4>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "pockemon/base.html" %}
+
+{% block title %} {{ title }}{% endblock %}
+
+{% block content %}
+
+<h4><a href="{% url 'index' %}"> Back to Home</a></h4>
+<p>Pockemon's names:</p>
+<ol>
+    {% for name in pokemons_names %}
+    <li>{{ name }}</li>
+    {% endfor %}
+</ol>
+<h4><a href="{% url 'index' %}"> Back to Home</a></h4>
+{% endblock %}
