@@ -1,8 +1,0 @@
-.idea
-.gitignore
-.dockerignore
-docker-compose.yml
-*.sqlite3
-Dockerfile
-venv
-venv_django
